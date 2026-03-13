@@ -49,9 +49,20 @@ class item {
     }
 }
 
-function showNewListPopup() {
+let lists = []
 
-    document.getElementById("new-list-popup").setAttribute("style", "display: flex;")
+function saveLists() {
+
+    localStorage.setItem("lists", JSON.stringify(lists))
+}
+
+function loadLists() {
+
+    let loadedLists = JSON.parse(localStorage.getItem("lists"))
+    if(loadedLists != null)
+
+    console.log(lists)
+    renderListsCards()
 }
 
 function createNewList() {
@@ -60,8 +71,15 @@ function createNewList() {
     if(listName == "")
         listName = "Nuova lista"
 
-    new list(listName)
+    lists.push(new list(listName))
     closeNewListPopup()
+    saveLists()
+    renderListsCards()
+}
+
+function showNewListPopup() {
+
+    document.getElementById("new-list-popup").setAttribute("style", "display: flex;")
 }
 
 function closeNewListPopup() {
@@ -81,4 +99,21 @@ function createItem() {
 
     let newItem = new item(itemName, itemWeight, itemQty, itemPrice, itemPriceKG, itemType, wantedIndex)
     return newItem
+}
+
+
+function renderListsCards(){
+
+    lists.forEach(list => {
+
+        let card = document.createElement("div")
+        card.classList.add("list-card")
+        card.innerHTML = `
+            <h2>${list.name}</h2>
+            <p>Totale: ${list.getTotalCost()}€</p>
+            <p>Numero di articoli: ${list.getItemsCount()}</p>
+        `
+
+        document.getElementById("list-container").appendChild(card)
+    });
 }
