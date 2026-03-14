@@ -1,29 +1,34 @@
 class List {
 
-    constructor(name, id) {
+    constructor(name, id, items = []) {
 
         this.name = name
         if(id == null)
             this.id = crypto.randomUUID().split("-")[0]
         else
             this.id = id
-        this.items = []
+        this.items = items
     }
 
-    addItem(item) {
+    getRealItems() {
+        
+        return this.items.map(id => items[id])
+    }
 
-        if(!this.findItem(item))
-            this.items.push(item)   
+    addItem(itemId) {
+
+        if(!this.items.includes(itemId))
+            this.items.push(itemId)   
+    }
+
+    findItemById(itemId){
+
+        return this.items.find(id => id === itemId)
     }
 
     removeItem(item){
 
         this.items.splice(this.items.indexOf(item), 1)
-    }
-
-    findItem(item){
-
-        return this.items.indexOf(item)
     }
 
     getItemsArray(){
@@ -33,7 +38,15 @@ class List {
 
     getTotalCost() {
 
-        return this.items.reduce((total, item) => total + (item.price || 0), 0);
+        let total = 0
+        this.items.forEach(itemId => {
+            
+            const price = parseFloat(getItemsById(itemId).price) || 0
+            console.log(price)
+            total += price
+        });
+
+        return total
     }
 
     getItemsCount(){
@@ -56,20 +69,19 @@ function loadLists() {
 
     console.log(lists)
 
-    let loadedLists = JSON.parse(localStorage.getItem("lists"))
-    let loadedItems = JSON.parse(localStorage.getItem("items"))
-    if(loadedLists == null)
-        return
+    const loadedLists = JSON.parse(localStorage.getItem("lists"))
+    const loadedItems = JSON.parse(localStorage.getItem("items"))
+
+    if(loadedLists != null)
+        loadedLists.forEach(list => {
+            lists.push(new List(list.name, list.id, list.items))
+        });
 
     if(loadedItems != null)
         items = loadedItems
 
-    loadedLists.forEach(list => {
-        lists.push(new List(list.name, list.id))
-    });
+    console.log(lists, items)
 
-
-    console.log(lists)
     renderListCards()
     renderItemCards()
 }
@@ -80,8 +92,9 @@ function createNewList() {
     if(listName == "")
         listName = "Nuova lista"
 
-    let newList = new List(listName) 
+    const newList = new List(listName) 
     lists.push(newList)
+
     closeNewListPopup()
     saveLists()
     renderSingleListCard(newList)
@@ -111,20 +124,21 @@ function closeNewItemPopup() {
 
 function createNewItem() {
 
-    let itemName = document.getElementById("new-item-name-input").value
+    const itemName = document.getElementById("new-item-name-input").value
     if(itemName == ""){
         alert("Inserisci il nome del prodotto")
         return
     }
-    let itemWeight = document.getElementById("new-item-weight-input").value
-    let itemQty = document.getElementById("new-item-qty-input").value
-    let itemPrice = document.getElementById("new-item-price-input").value
-    let itemPriceKG = document.getElementById("new-item-priceKG-input").value
-    let itemType = document.getElementById("new-item-type-input").value
-    let itemBrand = document.getElementById("new-item-brand-input").value
-    let itemId = Date.now().toString()
+    const itemWeight = document.getElementById("new-item-weight-input").value
+    const itemQty = document.getElementById("new-item-qty-input").value
+    const itemPrice = document.getElementById("new-item-price-input").value
+    const itemPriceKG = document.getElementById("new-item-priceKG-input").value
+    const itemType = document.getElementById("new-item-type-input").value
+    const itemBrand = document.getElementById("new-item-brand-input").value
+    const [part1, part2, part3] = crypto.randomUUID().split("-")
+    let itemId = part1 + part2 + part3
 
-    let item = {name: itemName, weight: itemWeight, qty: itemQty, price: itemPrice, priceKG: itemPriceKG, type: itemType, brand: itemBrand, id: itemId, wantedIndex: 0}
+    const item = {id: itemId, name: itemName, weight: itemWeight, qty: itemQty, price: itemPrice, priceKG: itemPriceKG, type: itemType, brand: itemBrand, wantedIndex: 0}
 
     items.push(item)
 
@@ -137,7 +151,7 @@ function createNewItem() {
 
 function renderListCards(){
 
-    let listContainer  = document.getElementById("list-container")
+    const listContainer  = document.getElementById("list-container")
     listContainer.innerHTML = ""
 
     lists.forEach(list => {
@@ -158,7 +172,7 @@ function renderListCards(){
 
 function renderSingleListCard(list){
 
-    let listContainer  = document.getElementById("list-container")
+    const listContainer  = document.getElementById("list-container")
 
     let card = document.createElement("div")
     card.setAttribute("onClick", "viewList('" + list.id + "')")
@@ -184,10 +198,12 @@ function renderItemCards(listId){
         items.forEach(item => {
             
             let card = document.createElement("div")
-            card.setAttribute("onClick", "viewItem('" + item.id + "')")
             card.classList.add("item-card")
             card.innerHTML = `
-                <h2>${item.name}</h2>
+                <div class="item-card-info" onclick=viewItem('${item.id}')>
+                    <h2>${item.name}</h2>
+                </div>
+                <button onClick=addItemToList('${item.id}')>+</button>
             `
 
             itemContainer.appendChild(card)
@@ -197,16 +213,23 @@ function renderItemCards(listId){
     }else{
 
         let list = getListById(listId)
+
         if(!list)
             return console.log("Lista non trovata")
 
-        list.getItemsArray().forEach(item  => {
+        list.getItemsArray().forEach(itemId  => {
+
+            item = getItemsById(itemId)
+
             
             let card = document.createElement("div")
             card.setAttribute("onClick", "viewItem('" + item.id + "')")
             card.classList.add("item-card")
             card.innerHTML = `
-                <h2>${item.name}</h2>
+                <div class="item-card-info" onclick=viewItem('${item.id}')>
+                    <h2>${item.name}</h2>
+                </div>
+                <button onClick=addItemToList('${item.id}')>+</button>
             `
 
             itemContainer.appendChild(card)
@@ -223,26 +246,68 @@ function renderSingleItemCard(item){
     card.setAttribute("onClick", "viewItem('" + item.id + "')")
     card.classList.add("item-card")
     card.innerHTML = `
-        <h2>${item.name}</h2>
+        <div class="item-card-info" onclick=viewItem('${item.id}')>
+            <h2>${item.name}</h2>
+        </div>
+        <button onClick=addItemToList('${item.id}')>+</button>
     `
 
     itemContainer.appendChild(card)
     card.scrollIntoView()
 }
 
-
-
-
 function viewList(id){
 
-    let list = getListById(id)
-    console.log(list)
-    if(list == null)
-        return console.log("Errore id lista")
-    renderItemCards(list)
+    renderItemCards(id)
 }
 
 function getListById(id){
 
    return lists.find(list => String(list.id).localeCompare(String(id)) == 0);
+}
+
+async function addItemToList(itemId) {
+
+    const listId = await showListSelection()
+    if (!listId) return
+
+    let selectedList = lists.find(l => l.id === listId)
+    selectedList.addItem(itemId)
+
+    console.log(lists)
+    
+    renderListCards()
+    saveLists()
+
+    document.getElementById("list-selection").style.display = "none"
+}
+
+function showListSelection(){
+
+    return new Promise((resolve) => {
+
+        let container = document.getElementById("list-selection")
+        container.innerHTML = ""
+        container.style.display = "flex"
+
+        lists.forEach(list => {
+            
+            let card = document.createElement("div")
+            card.onclick = () => resolve(list.id)
+            card.classList.add("list-selection-card")
+            card.innerHTML = `
+                <h2>${list.name}</h2>
+            `
+
+            container.appendChild(card)
+
+        });
+
+    });
+}
+
+
+function getItemsById(itemId){
+
+    return items.find(item => item.id == itemId)
 }
