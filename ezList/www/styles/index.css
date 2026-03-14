@@ -1,10 +1,11 @@
 body {
   margin: 0;
-  padding: 0;
+  padding: 1vh 1vw;
   width: 100vw;
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: hidden;
+  box-sizing: border-box;
 }
 
 .container {

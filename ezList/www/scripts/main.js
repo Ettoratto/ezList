@@ -26,6 +26,11 @@ class List {
         return this.items.indexOf(item)
     }
 
+    getItemsArray(){
+
+        return this.items
+    }
+
     getTotalCost() {
 
         return this.items.reduce((total, item) => total + (item.price || 0), 0);
@@ -119,10 +124,13 @@ function createNewItem() {
     let itemBrand = document.getElementById("new-item-brand-input").value
     let itemId = Date.now().toString()
 
-    items.push({name: itemName, weight: itemWeight, qty: itemQty, price: itemPrice, priceKG: itemPriceKG, type: itemType, brand: itemBrand, id: itemId, wantedIndex: 0})
+    let item = {name: itemName, weight: itemWeight, qty: itemQty, price: itemPrice, priceKG: itemPriceKG, type: itemType, brand: itemBrand, id: itemId, wantedIndex: 0}
+
+    items.push(item)
 
     closeNewItemPopup()
     saveLists()
+    renderSingleItemCard(item)
     console.log(items)
 }
 
@@ -166,15 +174,14 @@ function renderSingleListCard(list){
 }
 
 
-function renderItemCards(list){
+function renderItemCards(listId){
 
     let itemContainer = document.getElementById("items-container")
     itemContainer.innerHTML = ""
-    if(!list){
+
+    if(!listId){
 
         items.forEach(item => {
-
-            console.log(item)
             
             let card = document.createElement("div")
             card.setAttribute("onClick", "viewItem('" + item.id + "')")
@@ -189,8 +196,38 @@ function renderItemCards(list){
 
     }else{
 
+        let list = getListById(listId)
+        if(!list)
+            return console.log("Lista non trovata")
 
+        list.getItemsArray().forEach(item  => {
+            
+            let card = document.createElement("div")
+            card.setAttribute("onClick", "viewItem('" + item.id + "')")
+            card.classList.add("item-card")
+            card.innerHTML = `
+                <h2>${item.name}</h2>
+            `
+
+            itemContainer.appendChild(card)
+            card.scrollIntoView()
+        });
     }
+}
+
+function renderSingleItemCard(item){
+
+    let itemContainer = document.getElementById("items-container")
+
+    let card = document.createElement("div")
+    card.setAttribute("onClick", "viewItem('" + item.id + "')")
+    card.classList.add("item-card")
+    card.innerHTML = `
+        <h2>${item.name}</h2>
+    `
+
+    itemContainer.appendChild(card)
+    card.scrollIntoView()
 }
 
 
@@ -199,20 +236,13 @@ function renderItemCards(list){
 function viewList(id){
 
     let list = getListById(id)
+    console.log(list)
     if(list == null)
         return console.log("Errore id lista")
-    console.log(list)
-    renderItems(list)
+    renderItemCards(list)
 }
 
 function getListById(id){
-    console.log(id)
 
-    lists.forEach(list => {
-
-        console.log(list.id)
-        if(String(list.id).localeCompare(String(id)) == 0)
-            return list
-    });
-    return null
+   return lists.find(list => String(list.id).localeCompare(String(id)) == 0);
 }
