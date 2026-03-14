@@ -12,12 +12,18 @@ class List {
 
     addItem(item) {
 
-        this.items.push(item)   
+        if(!this.findItem(item))
+            this.items.push(item)   
     }
 
     removeItem(item){
 
         this.items.splice(this.items.indexOf(item), 1)
+    }
+
+    findItem(item){
+
+        return this.items.indexOf(item)
     }
 
     getTotalCost() {
@@ -30,29 +36,15 @@ class List {
         return this.items.length
     }
 
-
-
-}
-
-class Item {
-
-    constructor(name, weight, qty, price, priceKG, type, wantedIndex){
-
-        this.name = name
-        this.weight = weight
-        this.qty = qty
-        this.price = price
-        this.priceKG = priceKG
-        this.type = type
-        this.wantedIndex = wantedIndex
-    }
 }
 
 let lists = []
+let items = []
 
 function saveLists() {
 
     localStorage.setItem("lists", JSON.stringify(lists))
+    localStorage.setItem("items", JSON.stringify(items))
 }
 
 function loadLists() {
@@ -78,10 +70,11 @@ function createNewList() {
     if(listName == "")
         listName = "Nuova lista"
 
-    lists.push(new List(listName))
+    let newList = new List(listName) 
+    lists.push(newList)
     closeNewListPopup()
     saveLists()
-    renderListsCards()
+    renderSingleListCard(newList)
 }
 
 function showNewListPopup() {
@@ -91,10 +84,22 @@ function showNewListPopup() {
 
 function closeNewListPopup() {
 
+    document.getElementById("new-list-name-input").value = ""
     document.getElementById("new-list-popup").setAttribute("style", "display: none;")
 }
 
-function createItem() {
+function showNewItemPopup() {
+
+    document.getElementById("new-item-popup").setAttribute("style", "display: flex;")
+}
+
+function closeNewItemPopup() {
+
+    document.getElementById("new-item-name-input").value = ""
+    document.getElementById("new-item-popup").setAttribute("style", "display: none;")
+}
+
+function createNewItem() {
 
     let itemName = document.getElementById("itemName").value
     let itemWeight = document.getElementById("itemWeight").value
@@ -102,27 +107,87 @@ function createItem() {
     let itemPrice = document.getElementById("itemPrice").value
     let itemPriceKG = document.getElementById("itemPriceKG").value
     let itemType = document.getElementById("itemType").value
-    let wantedIndex = document.getElementById("wantedIndex").value
 
-    let newItem = new Item(itemName, itemWeight, itemQty, itemPrice, itemPriceKG, itemType, wantedIndex)
-    return newItem
+    items.push({name: itemName, weight: itemWeight, qty: itemQty, price: itemPrice, priceKG: itemPriceKG, type: itemType, wantedIndex: 0})
+    console.log(items)
 }
 
 
 function renderListsCards(){
 
-    document.getElementById("list-container").innerHTML = ""
+    let listContainer  = document.getElementById("list-container")
+    listContainer.innerHTML = ""
 
     lists.forEach(list => {
 
         let card = document.createElement("div")
+        card.setAttribute("onClick", "viewList('" + list.id + "')")
         card.classList.add("list-card")
         card.innerHTML = `
             <h2>${list.name}</h2>
             <p>Totale: ${list.getTotalCost()}€</p>
-            <p>Numero di articoli: ${list.getItemsCount()}</p>
+            <p>Articoli: ${list.getItemsCount()}</p>
         `
 
-        document.getElementById("list-container").appendChild(card)
+        listContainer.appendChild(card)
+        card.scrollIntoView()
     });
+}
+
+function renderSingleListCard(list){
+
+    let listContainer  = document.getElementById("list-container")
+
+    let card = document.createElement("div")
+    card.setAttribute("onClick", "viewList('" + list.id + "')")
+    card.classList.add("list-card")
+    card.innerHTML = `
+        <h2>${list.name}</h2>
+        <p>Totale: ${list.getTotalCost()}€</p>
+        <p>Articoli: ${list.getItemsCount()}</p>
+    `
+
+    listContainer.appendChild(card)
+    card.scrollIntoView()
+}
+
+
+function renderItems(list){
+
+    let container = document.getElementById("dashboard-items-sidebar")
+
+    if(list == null){
+
+        items.forEach(element => {
+            
+        });
+
+    }else{
+
+
+    }
+}
+
+
+
+
+function viewList(id){
+
+    let list = getListById(id)
+    if(list == null)
+        return console.log("Errore id lista")
+    console.log(list)
+    renderItems(list)
+}
+
+function getListById(id){
+    console.log(id)
+
+    lists.forEach(list => {
+
+        console.log(list.id)
+        if(String(list.id).localeCompare(String(id)) == 0)
+            return list
+    });
+    return null
 }
