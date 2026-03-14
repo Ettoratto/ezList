@@ -1,9 +1,12 @@
-class list {
+class List {
 
-    constructor(name) {
+    constructor(name, id) {
 
         this.name = name
-        this.id = Date.now().toString()
+        if(id == null)
+            this.id = crypto.randomUUID().split("-")[0]
+        else
+            this.id = id
         this.items = []
     }
 
@@ -19,11 +22,7 @@ class list {
 
     getTotalCost() {
 
-        let total = 0
-        for (let i = 0; i < this.items.length; i++)
-            total += this.items[i].price
-        
-        return total
+        return this.items.reduce((total, item) => total + (item.price || 0), 0);
     }
 
     getItemsCount(){
@@ -35,7 +34,7 @@ class list {
 
 }
 
-class item {
+class Item {
 
     constructor(name, weight, qty, price, priceKG, type, wantedIndex){
 
@@ -58,8 +57,16 @@ function saveLists() {
 
 function loadLists() {
 
+    console.log(lists)
+
     let loadedLists = JSON.parse(localStorage.getItem("lists"))
-    if(loadedLists != null)
+    if(loadedLists == null)
+        return
+
+    loadedLists.forEach(list => {
+        lists.push(new List(list.name, list.id))
+    });
+
 
     console.log(lists)
     renderListsCards()
@@ -71,7 +78,7 @@ function createNewList() {
     if(listName == "")
         listName = "Nuova lista"
 
-    lists.push(new list(listName))
+    lists.push(new List(listName))
     closeNewListPopup()
     saveLists()
     renderListsCards()
@@ -97,12 +104,14 @@ function createItem() {
     let itemType = document.getElementById("itemType").value
     let wantedIndex = document.getElementById("wantedIndex").value
 
-    let newItem = new item(itemName, itemWeight, itemQty, itemPrice, itemPriceKG, itemType, wantedIndex)
+    let newItem = new Item(itemName, itemWeight, itemQty, itemPrice, itemPriceKG, itemType, wantedIndex)
     return newItem
 }
 
 
 function renderListsCards(){
+
+    document.getElementById("list-container").innerHTML = ""
 
     lists.forEach(list => {
 
