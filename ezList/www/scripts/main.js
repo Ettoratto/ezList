@@ -52,8 +52,12 @@ function loadLists() {
     console.log(lists)
 
     let loadedLists = JSON.parse(localStorage.getItem("lists"))
+    let loadedItems = JSON.parse(localStorage.getItem("items"))
     if(loadedLists == null)
         return
+
+    if(loadedItems != null)
+        items = loadedItems
 
     loadedLists.forEach(list => {
         lists.push(new List(list.name, list.id))
@@ -61,7 +65,8 @@ function loadLists() {
 
 
     console.log(lists)
-    renderListsCards()
+    renderListCards()
+    renderItemCards()
 }
 
 function createNewList() {
@@ -101,19 +106,28 @@ function closeNewItemPopup() {
 
 function createNewItem() {
 
-    let itemName = document.getElementById("itemName").value
-    let itemWeight = document.getElementById("itemWeight").value
-    let itemQty = document.getElementById("itemQty").value
-    let itemPrice = document.getElementById("itemPrice").value
-    let itemPriceKG = document.getElementById("itemPriceKG").value
-    let itemType = document.getElementById("itemType").value
+    let itemName = document.getElementById("new-item-name-input").value
+    if(itemName == ""){
+        alert("Inserisci il nome del prodotto")
+        return
+    }
+    let itemWeight = document.getElementById("new-item-weight-input").value
+    let itemQty = document.getElementById("new-item-qty-input").value
+    let itemPrice = document.getElementById("new-item-price-input").value
+    let itemPriceKG = document.getElementById("new-item-priceKG-input").value
+    let itemType = document.getElementById("new-item-type-input").value
+    let itemBrand = document.getElementById("new-item-brand-input").value
+    let itemId = Date.now().toString()
 
-    items.push({name: itemName, weight: itemWeight, qty: itemQty, price: itemPrice, priceKG: itemPriceKG, type: itemType, wantedIndex: 0})
+    items.push({name: itemName, weight: itemWeight, qty: itemQty, price: itemPrice, priceKG: itemPriceKG, type: itemType, brand: itemBrand, id: itemId, wantedIndex: 0})
+
+    closeNewItemPopup()
+    saveLists()
     console.log(items)
 }
 
 
-function renderListsCards(){
+function renderListCards(){
 
     let listContainer  = document.getElementById("list-container")
     listContainer.innerHTML = ""
@@ -152,14 +166,25 @@ function renderSingleListCard(list){
 }
 
 
-function renderItems(list){
+function renderItemCards(list){
 
-    let container = document.getElementById("dashboard-items-sidebar")
+    let itemContainer = document.getElementById("items-container")
+    itemContainer.innerHTML = ""
+    if(!list){
 
-    if(list == null){
+        items.forEach(item => {
 
-        items.forEach(element => {
+            console.log(item)
             
+            let card = document.createElement("div")
+            card.setAttribute("onClick", "viewItem('" + item.id + "')")
+            card.classList.add("item-card")
+            card.innerHTML = `
+                <h2>${item.name}</h2>
+            `
+
+            itemContainer.appendChild(card)
+            card.scrollIntoView()
         });
 
     }else{

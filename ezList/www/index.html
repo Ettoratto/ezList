@@ -28,6 +28,7 @@
             <div class="dashboard-items-sidebar" id="dashboard-items-sidebar">
 
                 <div class="card-container" id="items-container"></div>
+                
                 <div class="dashboard-items-menu">
                     <button onclick="showNewItemPopup()">
                         Nuovo prodotto
@@ -51,12 +52,12 @@
                     <div class="new-item-popup-container">
 
                         <input type="text" placeholder="Nome" id="new-item-name-input">
-                        <input type="text" placeholder="Peso" id="new-item-name-input">
-                        <input type="text" placeholder="Quantità" id="new-item-name-input">
-                        <input type="text" placeholder="Prezzo" id="new-item-name-input">
-                        <input type="text" placeholder="Prezzo/Kg" id="new-item-name-input">
-                        <input type="text" placeholder="Tipo" id="new-item-name-input">
-                        <input type="text" placeholder="Marca" id="new-item-name-input">
+                        <input type="text" placeholder="Peso" id="new-item-weight-input">
+                        <input type="text" placeholder="Quantità" id="new-item-qty-input">
+                        <input type="text" placeholder="Prezzo" id="new-item-price-input">
+                        <input type="text" placeholder="Prezzo/Kg" id="new-item-priceKG-input">
+                        <input type="text" placeholder="Tipo" id="new-item-type-input">
+                        <input type="text" placeholder="Marca" id="new-item-brand-input">
 
                         <button onclick="createNewItem()">Crea</button>
                         <button onclick="closeNewItemPopup()">Annulla</button>
