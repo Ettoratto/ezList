@@ -1,0 +1,60 @@
+.dashboard-lists-sidebar {
+
+    border: 2px solid black;
+
+    width: 50%;
+    height: 100vh;
+    position: relative;
+    margin-right: 1vw;
+    
+    overflow: hidden;
+}
+
+.dashboard-lists-menu{
+
+    justify-content: center;
+    display: flex;
+
+    border: 2px solid black;
+    height: 6vh;
+    width: 100%;
+
+    
+    position: absolute;
+    bottom: 2vh;
+}
+
+.dashboard-lists-menu button {
+
+    width: 100%;
+}
+
+.dashboard-items-sidebar {
+
+    border: 2px solid black;
+
+    width: 50%;
+    height: 100vh;
+    position: relative;
+    
+    overflow: hidden;
+}
+
+.dashboard-items-menu{
+
+    justify-content: center;
+    display: flex;
+
+    border: 2px solid black;
+    height: 6vh;
+    width: 100%;
+
+    
+    position: absolute;
+    bottom: 2vh;
+}
+
+.dashboard-items-menu button {
+
+    width: 100%;
+}

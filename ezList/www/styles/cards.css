@@ -1,0 +1,48 @@
+.card-container {
+
+    display: flex;
+    flex-direction: column-reverse;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.card-container::before {
+    content: '';
+    margin-top: auto;
+}
+
+.item-card {
+
+    display: flex;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    align-items: center;
+    position: relative;
+}
+
+.item-card button {
+
+    height: 50%;
+    right: 0;
+    position: absolute;
+}
+
+.item-card-info {
+
+    width: 100%;
+}
+
+.list-selection-card {
+
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    color: white;
+    width: 60%;
+}
+
+.selected-list-card {
+
+    background-color: pink;
+}
