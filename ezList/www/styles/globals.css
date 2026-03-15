@@ -11,6 +11,8 @@ body {
 .container {
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     padding: 1vw;
+    padding-bottom: 10vh;
+    box-sizing: border-box;
 }
