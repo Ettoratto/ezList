@@ -30,6 +30,9 @@
 
 .item-card-info {
 
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
     width: 100%;
 }
 
@@ -45,4 +48,13 @@
 .selected-list-card {
 
     background-color: pink;
+}
+
+.item-display-card {
+
+    display: flex;
+    justify-content: center;
+    width: 80vw;
+    border: 1px solid black;
+    background-color: #fff;
 }

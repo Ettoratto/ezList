@@ -113,12 +113,35 @@ function renderSingleItemCard(item){
     card.setAttribute("onClick", "viewItem('" + item.id + "')")
     card.classList.add("item-card")
     card.innerHTML = `
-        <div class="item-card-info" onclick=viewItem('${item.id}')>
-            <h2>${item.name}</h2>
-        </div>
+        <h4>${item.name}</h4><br>
+        <span> | ${item.price}€</span>
         <button onClick=addItemToList('${item.id}')>+</button>
     `
 
     itemContainer.appendChild(card)
     card.scrollIntoView()
+}
+
+function viewItem(itemId){
+
+    const item = getItemsById(itemId)
+    const container = document.getElementById("item-display")
+    container.innerHTML = ""
+
+    let card = document.createElement("div")
+    card.innerHTML = `
+
+        <div class="item-display-card">
+            <h4>${item.name}</h4><br>
+            <span> | ${item.price}€</span>
+        </div>
+    `
+
+    container.appendChild(card)
+    container.setAttribute("style", "display: flex;")
+}
+
+function closeItemDisplay(){
+
+    document.getElementById("item-display").setAttribute("style", "display: none")
 }

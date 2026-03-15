@@ -35,7 +35,7 @@ function createNewItem() {
     closeNewItemPopup()
     saveLists()
     renderSingleItemCard(item)
-    console.log(items)
+    console.log("items: " + items)
 }
 
 function viewList(id){
@@ -68,7 +68,7 @@ async function addItemToList(itemId) {
     let selectedList = lists.find(l => l.id === listId)
     selectedList.addItem(itemId)
 
-    console.log(lists)
+    console.log("lists: " + lists)
     
     renderListCards()
     saveLists()
