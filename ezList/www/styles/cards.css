@@ -15,17 +15,15 @@
 .item-card {
 
     display: flex;
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+    flex-direction: row;
+    width: 100%;
     align-items: center;
-    position: relative;
 }
 
 .item-card button {
 
+    
     height: 50%;
-    right: 0;
-    position: absolute;
 }
 
 .item-card-info {
@@ -33,7 +31,6 @@
     display: flex;
     justify-content: baseline;
     align-items: center;
-    width: 100%;
 }
 
 .list-selection-card {

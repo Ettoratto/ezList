@@ -47,7 +47,6 @@
     height: 6vh;
     width: 100%;
 
-    bottom: 2vh;
 }
 
 .dashboard-items-menu button {
@@ -59,7 +58,7 @@
 
     display: flex;
     flex-direction: row;
-    height: 90vh;
+    height: 89vh;
 }
 
 .dashboard-menu-container {

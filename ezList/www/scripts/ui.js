@@ -110,11 +110,13 @@ function renderSingleItemCard(item){
     let itemContainer = document.getElementById("items-container")
 
     let card = document.createElement("div")
-    card.setAttribute("onClick", "viewItem('" + item.id + "')")
     card.classList.add("item-card")
     card.innerHTML = `
-        <h4>${item.name}</h4><br>
-        <span> | ${item.price}€</span>
+        <div class="item-card-info" onclick="viewItem('${item.id}')">
+            <h4>${item.name}</h4><br>
+            <span> | ${item.price}€</span>
+        </ div>
+
         <button onClick=addItemToList('${item.id}')>+</button>
     `
 
