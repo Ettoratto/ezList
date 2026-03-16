@@ -1,6 +1,7 @@
 function showNewListPopup() {
 
     document.getElementById("new-list-popup").setAttribute("style", "display: flex;")
+    document.getElementById("new-list-name-input").select()
 }
 
 function closeNewListPopup() {
@@ -12,6 +13,7 @@ function closeNewListPopup() {
 function showNewItemPopup() {
 
     document.getElementById("new-item-popup").setAttribute("style", "display: flex;")
+    document.getElementById("new-item-name-input").select()
 }
 
 function closeNewItemPopup() {
@@ -99,7 +101,7 @@ function renderItemCards(listId){
 
         list.getItemsArray().forEach(itemId  => {
 
-            item = getItemsById(itemId)
+            item = getItemById(itemId)
             renderSingleItemCard(item)
         });
     }
@@ -113,8 +115,10 @@ function renderSingleItemCard(item){
     card.classList.add("item-card")
     card.innerHTML = `
         <div class="item-card-info" onclick="viewItem('${item.id}')">
-            <h4>${item.name}</h4><br>
-            <span> | ${item.price}€</span>
+            <div class="item-card">
+                <h4>${item.name}</h4><br>
+                <span> | ${item.price}€</span>
+            </div>
         </ div>
 
         <button onClick=addItemToList('${item.id}')>+</button>
@@ -126,7 +130,7 @@ function renderSingleItemCard(item){
 
 function viewItem(itemId){
 
-    const item = getItemsById(itemId)
+    const item = getItemById(itemId)
     const container = document.getElementById("item-display")
     container.innerHTML = ""
 

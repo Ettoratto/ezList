@@ -48,7 +48,7 @@
                         </button>
                 </div>                
             </div>
-            <div class="new-list-popup" id="new-list-popup">
+            <div class="new-list-popup" id="new-list-popup" onclick="closeNewListPopup()">
 
                     <div class="new-list-popup-container">
 
@@ -58,18 +58,19 @@
                     </div>
             </div>
 
-            <div class="new-item-popup" id="new-item-popup">
+            <div class="new-item-popup" id="new-item-popup" onclick="closeNewItemPopup()">
 
                     <div class="new-item-popup-container">
-
-                        <input type="text" placeholder="Nome" id="new-item-name-input">
-                        <input type="text" placeholder="Peso" id="new-item-weight-input">
-                        <input type="text" placeholder="Quantità" id="new-item-qty-input">
-                        <input type="text" placeholder="Prezzo" id="new-item-price-input">
-                        <input type="text" placeholder="Prezzo/Kg" id="new-item-priceKG-input">
-                        <input type="text" placeholder="Tipo" id="new-item-type-input">
-                        <input type="text" placeholder="Marca" id="new-item-brand-input">
-
+                        <form class="item-input-form">
+                            <input type="text" placeholder="Nome" id="new-item-name-input" autofocus>
+                            <input type="text" placeholder="Peso" id="new-item-weight-input">
+                            <input type="text" placeholder="Quantità" id="new-item-qty-input">
+                            <input type="number" min="0.1" placeholder="Prezzo" id="new-item-price-input">
+                            <input type="number" min="0.1" placeholder="Prezzo/Kg" id="new-item-priceKG-input">
+                            <input type="text" placeholder="Tipo" id="new-item-type-input">
+                            <input type="text" placeholder="Marca" id="new-item-brand-input">
+                        </form>
+                        
                         <button onclick="createNewItem()">Crea</button>
                         <button onclick="closeNewItemPopup()">Annulla</button>
                     </div>

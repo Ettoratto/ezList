@@ -22,14 +22,14 @@
 
 .item-card button {
 
-    
     height: 50%;
 }
 
 .item-card-info {
 
+    width: 100%;
     display: flex;
-    justify-content: baseline;
+    justify-content:  space-between;
     align-items: center;
 }
 

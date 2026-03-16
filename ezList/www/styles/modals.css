@@ -13,6 +13,13 @@
     display: none;
 }
 
+.new-list-popup-container {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .new-item-popup {
 
     position: absolute;
@@ -26,6 +33,20 @@
     align-items: center;
 
     display: none;
+}
+
+.item-input-form {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.new-item-popup-container {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .list-selection {

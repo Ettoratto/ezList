@@ -44,7 +44,7 @@ class List {
         let total = 0
         this.items.forEach(itemId => {
             
-            const price = parseFloat(getItemsById(itemId).price) || 0
+            const price = parseFloat(getItemById(itemId).price) || 0
             total += price
         });
 
@@ -63,7 +63,7 @@ function getListById(id){
    return lists.find(list => String(list.id).localeCompare(String(id)) == 0);
 }
 
-function getItemsById(itemId){
+function getItemById(itemId){
 
     return items.find(item => item.id == itemId)
 }
