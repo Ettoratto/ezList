@@ -58,9 +58,9 @@
                     </div>
             </div>
 
-            <div class="new-item-popup" id="new-item-popup" onclick="closeNewItemPopup()">
+            <div class="new-item-popup" id="new-item-popup">
 
-                    <div class="new-item-popup-container">
+                    <div class="new-item-popup-container" onblur="closeNewItemPopup()">
                         <form class="item-input-form">
                             <input type="text" placeholder="Nome" id="new-item-name-input" autofocus>
                             <input type="text" placeholder="Peso" id="new-item-weight-input">
