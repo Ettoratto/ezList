@@ -55,7 +55,6 @@ function viewList(id){
         card.classList.add("selected-list-card")   
         renderItemCards(id)
     }
-
     
 }
 

@@ -2,6 +2,9 @@
 
     border: 2px solid black;
 
+    display: flex;
+    flex-direction: column;
+
     width: 30%;
     height: 100%;
     position: relative;
@@ -30,6 +33,9 @@
 .dashboard-items-sidebar {
 
     border: 2px solid black;
+
+    display: flex;
+    flex-direction: column;
 
     width: 70%;
     height: 100%;
@@ -68,5 +74,36 @@
     display: flex;
     flex-direction: row;
     width: 100%;
-    margin-top: 1.5vh;
+    margin-top: 3vh;
+}
+
+.interaction-menu {
+
+    border: 1px solid black;
+
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.interaction-menu span {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 1vw;
+}
+
+.interaction-menu input {
+
+    width: 100%;
+    padding: 1vw;
+
+}
+
+.interaction-menu button {
+    
 }
