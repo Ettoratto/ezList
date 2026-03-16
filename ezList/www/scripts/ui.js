@@ -126,7 +126,7 @@ function renderSingleItemCard(item){
                 |Tipo: ${item.type || "/"} <br>
                 |Qta: ${item.qty || "/"} <br>
             </span>
-        </div>
+            </div>
 
         <button onClick=addItemToList('${item.id}')>+</button>
     `
