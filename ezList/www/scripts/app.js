@@ -44,7 +44,7 @@ function viewList(id){
     if(card.classList.contains("selected-list-card")){
         card.classList.remove("selected-list-card")
         renderItemCards()
-        
+
     }else{
 
         for(let i = 0; i < lists.length; i++){
@@ -60,8 +60,10 @@ function viewList(id){
             }
         } 
         card.classList.add("selected-list-card")   
-        renderItemCards(id)
+        renderItemCards(getListById(id))
     }
+
+    searchItems()
     
 }
 
@@ -97,10 +99,24 @@ function searchItems(){
     let listId = null
     for(let i = 0; i < lists.length; i++)
         if(document.getElementById(lists[i].id).classList.contains("selected-list-card"))
-            listId = list[i].id
-
-    let myList = getListById(listId)
+            listId = lists[i].id
     
-    //const searchResult = filteredItems.filter((item) => String(item.name).toLowerCase().trim().search(searchInput) != -1)
+    let newList = getListById(listId)
+    let filteredItems = []
+    if(newList){
 
+        filteredItems = newList.items
+        .map((itemId) => getItemById(String(itemId)))
+        .filter((itemObj) => {
+            if (!itemObj || !itemObj.name) return false;
+            return itemObj.name.toLowerCase().trim().search(searchInput) !== -1;
+        })
+
+    }else
+        filteredItems = items.filter((item) => String(item.name).toLowerCase().trim().search(searchInput) != -1)
+    
+    document.getElementById("items-container").innerHTML = ""
+    filteredItems.forEach(item => {    
+            renderSingleItemCard(item) 
+    })
 }

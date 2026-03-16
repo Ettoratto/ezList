@@ -80,12 +80,12 @@ function renderSingleListCard(list){
 }
 
 
-function renderItemCards(listId){
+function renderItemCards(list){
 
     const itemContainer = document.getElementById("items-container")
     itemContainer.innerHTML = ""
 
-    if(!listId){
+    if(!list){
 
         items.forEach(item => {
             
@@ -93,11 +93,6 @@ function renderItemCards(listId){
         });
 
     }else{
-
-        const list = getListById(listId)
-
-        if(!list)
-            return console.log("Lista non trovata")
 
         list.getItemsArray().forEach(itemId  => {
 

@@ -3,14 +3,11 @@ let items = []
 
 class List {
 
-    constructor(name, id, items = []) {
+    constructor(name, id, items) {
 
         this.name = name
-        if(id == null)
-            this.id = crypto.randomUUID().split("-")[0]
-        else
-            this.id = id
-        this.items = items
+        this.id = id || crypto.randomUUID().split("-")[0]
+        this.items = items || []
     }
 
     getRealItems() {
