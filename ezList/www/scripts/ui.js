@@ -82,7 +82,7 @@ function renderSingleListCard(list){
 
 function renderItemCards(listId){
 
-    let itemContainer = document.getElementById("items-container")
+    const itemContainer = document.getElementById("items-container")
     itemContainer.innerHTML = ""
 
     if(!listId){
@@ -94,7 +94,7 @@ function renderItemCards(listId){
 
     }else{
 
-        let list = getListById(listId)
+        const list = getListById(listId)
 
         if(!list)
             return console.log("Lista non trovata")
@@ -109,17 +109,24 @@ function renderItemCards(listId){
 
 function renderSingleItemCard(item){
 
-    let itemContainer = document.getElementById("items-container")
+    const itemContainer = document.getElementById("items-container")
 
-    let card = document.createElement("div")
+    const card = document.createElement("div")
     card.classList.add("item-card")
     card.innerHTML = `
         <div class="item-card-info" onclick="viewItem('${item.id}')">
-            <div class="item-card">
-                <h4>${item.name}</h4><br>
-                <span> | ${item.price}€</span>
-            </div>
-        </ div>
+            <h4>${item.name}</h4><br>
+            <span> 
+                | ${item.price || "/"}€ <br> 
+                |${item.priceKG || "/"}€/Kg <br>
+                |Marca: ${item.brand || "N/A"} <br>
+            </span>
+            <span>
+                |Peso: ${item.weight || "/"}Kg <br>
+                |Tipo: ${item.type || "/"} <br>
+                |Qta: ${item.qty || "/"} <br>
+            </span>
+        </div>
 
         <button onClick=addItemToList('${item.id}')>+</button>
     `
@@ -139,7 +146,16 @@ function viewItem(itemId){
 
         <div class="item-display-card">
             <h4>${item.name}</h4><br>
-            <span> | ${item.price}€</span>
+             <span> 
+                    | ${item.price || "/"}€ <br> 
+                    |${item.priceKG || "/"}€/Kg <br>
+                    |Marca: ${item.brand || "N/A"} <br>
+                </span>
+                <span>
+                    |Peso: ${item.weight || "/"}Kg <br>
+                    |Tipo: ${item.type || "/"} <br>
+                    |Qta: ${item.qty || "/"} <br>
+                </span>
         </div>
     `
 

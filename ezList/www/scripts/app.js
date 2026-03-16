@@ -35,7 +35,6 @@ function createNewItem() {
     closeNewItemPopup()
     saveLists()
     renderSingleItemCard(item)
-    console.log("items: " + items)
 }
 
 function viewList(id){

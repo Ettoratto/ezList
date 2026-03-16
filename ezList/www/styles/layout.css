@@ -2,10 +2,11 @@
 
     border: 2px solid black;
 
-    width: 50%;
+    width: 30%;
     height: 100%;
     position: relative;
     margin-right: 1vw;
+    padding: 1vw;
     
     overflow: hidden;
 }
@@ -30,10 +31,11 @@
 
     border: 2px solid black;
 
-    width: 50%;
+    width: 70%;
     height: 100%;
     position: relative;
     margin-bottom: 10vh;
+    padding: 1vw;
     
     overflow: hidden;
 }
