@@ -95,14 +95,21 @@ function searchLists(){
 function searchItems(){
 
     const searchInput = document.getElementById("search-item-bar-input").value.toLowerCase().trim()
+    let filteredItems = []
 
     let listId = null
-    for(let i = 0; i < lists.length; i++)
-        if(document.getElementById(lists[i].id).classList.contains("selected-list-card"))
+    for(let i = 0; i < lists.length; i++){
+        
+        let listElement = document.getElementById(lists[i].id)
+
+        if(!listElement)
+                continue
+            
+        if(listElement.classList.contains("selected-list-card"))
             listId = lists[i].id
-    
+    }
+
     let newList = getListById(listId)
-    let filteredItems = []
     if(newList){
 
         filteredItems = newList.items
