@@ -44,11 +44,18 @@ function viewList(id){
     if(card.classList.contains("selected-list-card")){
         card.classList.remove("selected-list-card")
         renderItemCards()
+        
     }else{
 
         for(let i = 0; i < lists.length; i++){
-            if(document.getElementById(lists[i].id).classList.contains("selected-list-card")){
-                document.getElementById(lists[i].id).classList.remove("selected-list-card")
+
+            let listElement = document.getElementById(lists[i].id)
+
+            if(!listElement)
+                continue
+
+            if(listElement.classList.contains("selected-list-card")){
+                listElement.classList.remove("selected-list-card")
                 break
             }
         } 
@@ -77,21 +84,23 @@ async function addItemToList(itemId) {
 function searchLists(){
 
     const searchInput = document.getElementById("search-list-bar-input").value.toLowerCase().trim()
-    let searchResult = []
-    lists.forEach(list => {
-
-        if(String(list.name).toLowerCase().trim().search(searchInput) != -1)
-            searchResult.push(list)
-    });
+    
+    const searchResult = lists.filter((list) => String(list.name).toLowerCase().trim().search(searchInput) != -1) 
+    
     return renderListCards(searchResult)
 }   
 
 function searchItems(){
+
+    const searchInput = document.getElementById("search-item-bar-input").value.toLowerCase().trim()
 
     let listId = null
     for(let i = 0; i < lists.length; i++)
         if(document.getElementById(lists[i].id).classList.contains("selected-list-card"))
             listId = list[i].id
 
+    let myList = getListById(listId)
     
+    //const searchResult = filteredItems.filter((item) => String(item.name).toLowerCase().trim().search(searchInput) != -1)
+
 }
