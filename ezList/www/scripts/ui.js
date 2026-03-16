@@ -51,12 +51,12 @@ function showListSelection(){
     });
 }
 
-function renderListCards(){
+function renderListCards(myLists = lists){
 
     const listContainer  = document.getElementById("list-container")
     listContainer.innerHTML = ""
 
-    lists.forEach(list => {
+    myLists.forEach(list => {
         renderSingleListCard(list)
     });
 }

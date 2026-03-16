@@ -73,3 +73,25 @@ async function addItemToList(itemId) {
 
     document.getElementById("list-selection").style.display = "none"
 }
+
+function searchLists(){
+
+    const searchInput = document.getElementById("search-list-bar-input").value.toLowerCase().trim()
+    let searchResult = []
+    lists.forEach(list => {
+
+        if(String(list.name).toLowerCase().trim().search(searchInput) != -1)
+            searchResult.push(list)
+    });
+    return renderListCards(searchResult)
+}   
+
+function searchItems(){
+
+    let listId = null
+    for(let i = 0; i < lists.length; i++)
+        if(document.getElementById(lists[i].id).classList.contains("selected-list-card"))
+            listId = list[i].id
+
+    
+}
