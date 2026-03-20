@@ -127,3 +127,17 @@ function searchItems(){
             renderSingleItemCard(item) 
     })
 }
+
+function sortLists(){
+
+    
+}
+
+function sortItems(){
+
+}
+
+function inverSort(){
+
+    toggleSortArrow()
+}

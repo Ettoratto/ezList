@@ -162,3 +162,8 @@ function closeItemDisplay(){
 
     document.getElementById("item-display").setAttribute("style", "display: none")
 }
+
+function toggleSortArrow(){
+
+    
+}

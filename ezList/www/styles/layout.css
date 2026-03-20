@@ -1,3 +1,9 @@
+.lists-items-containers {
+
+    display: flex;
+    flex-direction: column;
+}
+
 .dashboard-lists-sidebar {
 
     border: 2px solid black;
@@ -5,12 +11,27 @@
     display: flex;
     flex-direction: column;
 
-    width: 30%;
-    height: 100%;
-    position: relative;
+    width: 100%;
+    height: 30vh;
+    min-height: 200px;
     margin-right: 1vw;
-    padding: 1vw;
+    padding: 2vw;
+    box-sizing: border-box;
     
+    overflow: hidden;
+}
+
+.dashboard-items-sidebar {
+
+    border: 2px solid black;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 58vh;
+    padding: 2vw;
+    box-sizing: border-box;
     overflow: hidden;
 }
 
@@ -30,22 +51,6 @@
     width: 100%;
 }
 
-.dashboard-items-sidebar {
-
-    border: 2px solid black;
-
-    display: flex;
-    flex-direction: column;
-
-    width: 70%;
-    height: 100%;
-    position: relative;
-    margin-bottom: 10vh;
-    padding: 1vw;
-    
-    overflow: hidden;
-}
-
 .dashboard-items-menu{
 
     justify-content: center;
@@ -62,12 +67,6 @@
     width: 100%;
 }
 
-.lists-items-containers {
-
-    display: flex;
-    flex-direction: row;
-    height: 89vh;
-}
 
 .dashboard-menu-container {
 
@@ -84,27 +83,50 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     box-sizing: border-box;
-}
-
-.interaction-menu span {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    box-sizing: border-box;
-    padding: 1vw;
+    padding: 1vh 1vw;
 }
 
 .interaction-menu input {
 
     width: 100%;
-    padding: 1vw;
-
+    padding: 1vh 1vw;
+    align-items: center;
+    box-sizing: border-box;
+    padding-left: 3vw;
 }
 
 .lists-search-bar-svg {
 
     position: absolute;
+}
+
+.filter-menu-container {
+
+    display: flex;
+    height: 100%;
+    align-items: center;
+    margin-left: auto;
+    padding: 0 1vw;
+}
+
+.filter-menu-container button {
+
+    background-color: transparent;
+    border: none
+}
+
+.filter-menu-container button:hover{
+
+    background-color: #f0f0f0;
+}
+
+#arrow-up-icon {
+
+    display: none;
+}
+
+.search-bar-container {
+
+    width: 100%;
 }

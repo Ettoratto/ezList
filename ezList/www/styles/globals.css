@@ -12,5 +12,5 @@ body {
   display: flex;
   flex-direction: column;
   padding: 1vw;
-  box-sizing: border-box;
+  height: 100%;
 }

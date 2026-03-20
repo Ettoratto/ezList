@@ -8,9 +8,27 @@
     overflow-x: hidden;
 }
 
+#list-container {
+    
+    flex-direction: row;
+    width: 100%;
+
+    flex-wrap: wrap;
+}
+
 .card-container::before {
     content: '';
     margin-top: auto;
+}
+
+.list-card {
+
+    border: 1px solid black;
+
+    padding: 0 1vw 0 1vw;
+    margin: 2vw;
+    width: 24vw;
+    overflow-wrap: break-word;
 }
 
 .item-card {
@@ -21,6 +39,9 @@
     flex-direction: row;
     width: 100%;
     align-items: center;
+
+    padding: 0 1vw;
+    box-sizing: border-box;
 }
 
 .item-card span {
