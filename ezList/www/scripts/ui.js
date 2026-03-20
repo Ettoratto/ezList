@@ -163,7 +163,35 @@ function closeItemDisplay(){
     document.getElementById("item-display").setAttribute("style", "display: none")
 }
 
+function showSortSelect(lists){
+
+    let sortElement
+    if(lists)
+        sortElement = document.getElementById("lists-sort-element")
+    else
+        sortElement = document.getElementById("items-sort-element")
+
+    sortElement.setAttribute("style", "display: flex")
+}   
+
+function hideSortSelect(lists){
+
+    let sortElement
+    if(lists)
+        sortElement = document.getElementById("lists-sort-element")
+    else
+        sortElement = document.getElementById("items-sort-element")
+
+    sortElement.setAttribute("style", "display: none")
+}
+
 function toggleSortArrow(){
 
-    
+
+}
+
+function palle(){
+
+    console.log("ciao")
+    hideSortSelect()
 }
