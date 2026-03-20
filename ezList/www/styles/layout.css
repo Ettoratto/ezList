@@ -103,6 +103,7 @@
 
 .filter-menu-container {
 
+    position: relative;
     display: flex;
     height: 100%;
     align-items: center;
@@ -112,6 +113,7 @@
 
 .filter-menu-container button {
 
+    position: relative;
     background-color: transparent;
     border: none
 }

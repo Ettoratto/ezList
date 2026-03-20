@@ -33,10 +33,10 @@
                         </div>
                         <div class="filter-menu-container">
 
-                            <div class="sort-select" id="lists-sort-element">
-                                <button onclick="palle()">Nome</button>
-                                <button>Articoli</button>
-                                <button>Costo</button>
+                            <div tabindex="0" onblur="hideSortSelect(true)" class="sort-select" id="lists-sort-element">
+                                <button onclick="sortLists('name')">Nome</button>
+                                <button onclick="sortLists('itemsCount')">N. Articoli</button>
+                                <button onclick="sortLists('cost')">Costo</button>
                             </div>
 
                             <button onclick="showSortSelect(true)">
@@ -67,10 +67,10 @@
                         </div>
                         <div class="filter-menu-container">
 
-                            <div class="sort-select" id="items-sort-element">
-                                <button onclick="palle()">Nome</button>
-                                <button>Prezzo</button>
-                                <button>Marca</button>
+                            <div tabindex="0" onblur="hideSortSelect(false)" class="sort-select" id="items-sort-element">
+                                <button onclick="sortItems('name')">Nome</button>
+                                <button onclick="sortItems('price')">Prezzo</button>
+                                <button onclick="sortItems('brand')">Marca</button>
                             </div>
 
                             <button onclick="showSortSelect(false)">

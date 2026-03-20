@@ -128,13 +128,14 @@ function searchItems(){
     })
 }
 
-function sortLists(){
+function sortLists(sortBy){
 
-    
+   
 }
 
 function sortItems(){
 
+    console.log("ciao")
 }
 
 function inverSort(){

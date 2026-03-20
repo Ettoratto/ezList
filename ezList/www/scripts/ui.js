@@ -172,12 +172,13 @@ function showSortSelect(lists){
         sortElement = document.getElementById("items-sort-element")
 
     sortElement.setAttribute("style", "display: flex")
+    sortElement.focus()
 }   
 
-function hideSortSelect(lists){
+function hideSortSelect(sortByList){
 
     let sortElement
-    if(lists)
+    if(sortByList)
         sortElement = document.getElementById("lists-sort-element")
     else
         sortElement = document.getElementById("items-sort-element")
@@ -188,10 +189,4 @@ function hideSortSelect(lists){
 function toggleSortArrow(){
 
 
-}
-
-function palle(){
-
-    console.log("ciao")
-    hideSortSelect()
 }
