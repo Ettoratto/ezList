@@ -1,31 +1,74 @@
-function showNewListPopup() {
+function toggleNewListPopup(show) {
 
-    document.getElementById("new-list-popup").setAttribute("style", "display: flex;")
-    document.getElementById("new-list-name-input").select()
+    const popup = document.getElementById("new-list-popup")
+    const input = document.getElementById("new-list-name-input")
+    const shouldShow = typeof show === "boolean" ? show : popup.style.display !== "flex"
+
+    if(shouldShow){
+        popup.setAttribute("style", "display: flex;")
+        input.select()
+    }else{
+        input.value = ""
+        popup.setAttribute("style", "display: none;")
+    }
 }
 
-function closeNewListPopup() {
+function toggleNewItemPopup(show) {
 
-    document.getElementById("new-list-name-input").value = ""
-    document.getElementById("new-list-popup").setAttribute("style", "display: none;")
+    const popup = document.getElementById("new-item-popup")
+    const input = document.getElementById("new-item-name-input")
+    const shouldShow = typeof show === "boolean" ? show : popup.style.display !== "flex"
+
+    if(shouldShow){
+        popup.setAttribute("style", "display: flex;")
+        input.select()
+    }else{
+        input.value = ""
+        popup.setAttribute("style", "display: none;")
+    }
 }
 
-function showNewItemPopup() {
+function toggleListSelection(show){
 
-    document.getElementById("new-item-popup").setAttribute("style", "display: flex;")
-    document.getElementById("new-item-name-input").select()
+    const listSelection = document.getElementById("list-selection")
+    const shouldShow = typeof show === "boolean" ? show : listSelection.style.display !== "flex"
+
+    if(shouldShow)
+        listSelection.setAttribute("style", "display: flex")
+    else
+        listSelection.setAttribute("style", "display: none")
 }
 
-function closeNewItemPopup() {
+function toggleItemDisplay(show){
 
-    document.getElementById("new-item-name-input").value = ""
-    document.getElementById("new-item-popup").setAttribute("style", "display: none;")
+    const itemDisplay = document.getElementById("item-display")
+    const shouldShow = typeof show === "boolean" ? show : itemDisplay.style.display !== "flex"
+
+    if(shouldShow)
+        itemDisplay.setAttribute("style", "display: flex")
+    else
+        itemDisplay.setAttribute("style", "display: none")
 }
 
-function closeListSelection(){
+function toggleSortSelect(sortByList){
 
-    document.getElementById("list-selection").setAttribute("style", "display: none")
+    let id = sortByList ? "lists-sort-element" : "items-sort-element"
+    let sortElement = document.getElementById(id)
+
+    if(sortElement.style.display === "flex") {
+        sortElement.setAttribute("style", "display: none")
+    } else {
+        sortElement.setAttribute("style", "display: flex")
+        sortElement.focus()
+    }
 }
+
+
+function toggleSortArrow(){
+
+
+}
+
 
 function showListSelection(){
 
@@ -33,7 +76,7 @@ function showListSelection(){
 
         let container = document.getElementById("list-selection")
         container.innerHTML = ""
-        container.style.display = "flex"
+        toggleListSelection(true)
 
         lists.forEach(list => {
             
@@ -108,19 +151,11 @@ function renderSingleItemCard(item){
 
     const card = document.createElement("div")
     card.classList.add("item-card")
+    let itemInfo = createItemHTML(item)
     card.innerHTML = `
         <div class="item-card-info" onclick="viewItem('${item.id}')">
             <h4>${item.name}</h4><br>
-            <span> 
-                | ${item.price || "/"}€ <br> 
-                |${item.priceKG || "/"}€/Kg <br>
-                |Marca: ${item.brand || "N/A"} <br>
-            </span>
-            <span>
-                |Peso: ${item.weight || "/"}Kg <br>
-                |Tipo: ${item.type || "/"} <br>
-                |Qta: ${item.qty || "/"} <br>
-            </span>
+            ${itemInfo}
             </div>
 
         <button onClick=addItemToList('${item.id}')>+</button>
@@ -137,56 +172,35 @@ function viewItem(itemId){
     container.innerHTML = ""
 
     let card = document.createElement("div")
+    let itemInfo = createItemHTML(item)
     card.innerHTML = `
 
         <div class="item-display-card">
             <h4>${item.name}</h4><br>
-             <span> 
-                    | ${item.price || "/"}€ <br> 
-                    |${item.priceKG || "/"}€/Kg <br>
-                    |Marca: ${item.brand || "N/A"} <br>
-                </span>
-                <span>
-                    |Peso: ${item.weight || "/"}Kg <br>
-                    |Tipo: ${item.type || "/"} <br>
-                    |Qta: ${item.qty || "/"} <br>
-                </span>
+            ${itemInfo}
         </div>
     `
 
     container.appendChild(card)
-    container.setAttribute("style", "display: flex;")
+    toggleItemDisplay(true)
 }
 
-function closeItemDisplay(){
+function createItemHTML(item){
 
-    document.getElementById("item-display").setAttribute("style", "display: none")
+    return `
+
+        <span> 
+            |Prezzo: ${item.price || "/"}€ <br> 
+            |Prezzo/Kg${item.priceKG || "/"} <br>
+            |Marca: ${item.brand || "/"} <br>
+        </span>
+        <span>
+            |Peso: ${item.weight || "/"}Kg <br>
+            |Tipo: ${item.type || "/"} <br>
+            |Qta: ${item.qty || "/"} <br>
+        </span>
+
+    `
 }
 
-function showSortSelect(lists){
 
-    let sortElement
-    if(lists)
-        sortElement = document.getElementById("lists-sort-element")
-    else
-        sortElement = document.getElementById("items-sort-element")
-
-    sortElement.setAttribute("style", "display: flex")
-    sortElement.focus()
-}   
-
-function hideSortSelect(sortByList){
-
-    let sortElement
-    if(sortByList)
-        sortElement = document.getElementById("lists-sort-element")
-    else
-        sortElement = document.getElementById("items-sort-element")
-
-    sortElement.setAttribute("style", "display: none")
-}
-
-function toggleSortArrow(){
-
-
-}

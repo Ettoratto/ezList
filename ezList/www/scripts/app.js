@@ -7,7 +7,7 @@ function createNewList() {
     const newList = new List(listName) 
     lists.push(newList)
 
-    closeNewListPopup()
+    toggleNewListPopup(false)
     saveLists()
     renderSingleListCard(newList)
 }
@@ -32,7 +32,7 @@ function createNewItem() {
 
     items.push(item)
 
-    closeNewItemPopup()
+    toggleNewItemPopup(false)
     saveLists()
     renderSingleItemCard(item)
 }
@@ -80,7 +80,7 @@ async function addItemToList(itemId) {
     renderListCards()
     saveLists()
 
-    document.getElementById("list-selection").style.display = "none"
+    toggleListSelection(false)
 }
 
 function searchLists(){

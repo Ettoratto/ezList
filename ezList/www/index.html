@@ -33,13 +33,13 @@
                         </div>
                         <div class="filter-menu-container">
 
-                            <div tabindex="0" onblur="hideSortSelect(true)" class="sort-select" id="lists-sort-element">
-                                <button onclick="sortLists('name')">Nome</button>
-                                <button onclick="sortLists('itemsCount')">N. Articoli</button>
-                                <button onclick="sortLists('cost')">Costo</button>
+                            <div tabindex="0" onblur="this.style.display='none'" class="sort-select" id="lists-sort-element">
+                                <button onmousedown="sortLists('name')">Nome</button>
+                                <button onmousedown="sortLists('itemsCount')">N. Articoli</button>
+                                <button onmousedown="sortLists('cost')">Costo</button>
                             </div>
 
-                            <button onclick="showSortSelect(true)">
+                            <button onmousedown="event.preventDefault(); toggleSortSelect(true)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-sort-descending"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l9 0" /><path d="M4 12l7 0" /><path d="M4 18l7 0" /><path d="M15 15l3 3l3 -3" /><path d="M18 6l0 12" /></svg>
                             </button>
                             
@@ -67,13 +67,13 @@
                         </div>
                         <div class="filter-menu-container">
 
-                            <div tabindex="0" onblur="hideSortSelect(false)" class="sort-select" id="items-sort-element">
-                                <button onclick="sortItems('name')">Nome</button>
-                                <button onclick="sortItems('price')">Prezzo</button>
-                                <button onclick="sortItems('brand')">Marca</button>
+                            <div tabindex="0" onblur="this.style.display='none'" class="sort-select" id="items-sort-element">
+                                <button onmousedown="sortItems('name')">Nome</button>
+                                <button onmousedown="sortItems('price')">Prezzo</button>
+                                <button onmousedown="sortItems('brand')">Marca</button>
                             </div>
 
-                            <button onclick="showSortSelect(false)">
+                            <button onmousedown="event.preventDefault(); toggleSortSelect(false)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-sort-descending"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l9 0" /><path d="M4 12l7 0" /><path d="M4 18l7 0" /><path d="M15 15l3 3l3 -3" /><path d="M18 6l0 12" /></svg>
                             </button>
                             
@@ -94,32 +94,32 @@
 
             <div class="dashboard-menu-container">
                 <div class="dashboard-lists-menu">
-                    <button onclick="showNewListPopup()">
+                    <button onclick="toggleNewListPopup(true)">
                         Nuova lista
                     </button>
                 </div>
 
                 <div class="dashboard-items-menu">
-                        <button onclick="showNewItemPopup()">
+                        <button onclick="toggleNewItemPopup(true)">
                             Nuovo prodotto
                         </button>
                 </div>                
             </div>
             <div class="new-list-popup" id="new-list-popup">
 
-                <div class="overlay" onclick="closeNewListPopup()"></div>
+                <div class="overlay" onclick="toggleNewListPopup(false)"></div>
 
                 <div class="new-list-popup-container">
 
                     <input type="text" placeholder="Nome della lista" id="new-list-name-input">
                     <button onclick="createNewList()">Crea</button>
-                    <button onclick="closeNewListPopup()">Annulla</button>
+                    <button onclick="toggleNewListPopup(false)">Annulla</button>
                 </div>
             </div>
 
             <div class="new-item-popup" id="new-item-popup">
 
-                <div class="overlay" onclick="closeNewItemPopup()"></div>
+                <div class="overlay" onclick="toggleNewItemPopup(false)"></div>
                 
                     <div class="new-item-popup-container">
                         <form class="item-input-form">
@@ -133,16 +133,16 @@
                         </form>
                         
                         <button onclick="createNewItem()">Crea</button>
-                        <button onclick="closeNewItemPopup()">Annulla</button>
+                        <button onclick="toggleNewItemPopup(false)">Annulla</button>
                     </div>
             </div>
 
         </div>
 
-        <div class="list-selection" id="list-selection" onclick="closeListSelection()">  
+        <div class="list-selection" id="list-selection" onclick="toggleListSelection(false)">  
         </div>
 
-        <div class="item-display" id="item-display" onclick="closeItemDisplay()">
+        <div class="item-display" id="item-display" onclick="toggleItemDisplay(false)">
         </div>
 
     </body>

@@ -79,9 +79,10 @@
 .item-display-card {
 
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 80vw;
     border: 1px solid black;
     background-color: #fff;
+    padding: 2vh 2vw;
 }
