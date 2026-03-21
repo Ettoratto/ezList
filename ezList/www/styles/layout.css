@@ -123,7 +123,12 @@
     background-color: #f0f0f0;
 }
 
-#arrow-up-icon {
+#lists-arrow-down-icon {
+
+    display: none;
+}
+
+#items-arrow-down-icon {
 
     display: none;
 }

@@ -138,7 +138,7 @@ function sortItems(){
     console.log("ciao")
 }
 
-function inverSort(){
+function invertSort(lists){
 
-    toggleSortArrow()
+    toggleSortArrow(lists)
 }

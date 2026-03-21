@@ -64,9 +64,30 @@ function toggleSortSelect(sortByList){
 }
 
 
-function toggleSortArrow(){
+function toggleSortArrow(lists){
 
+    let arrowUp, arrowDown
 
+    if(lists){
+        arrowUp = document.getElementById("lists-arrow-up-icon")
+        arrowDown = document.getElementById("lists-arrow-down-icon")
+    }else{
+        arrowUp = document.getElementById("items-arrow-up-icon")
+        arrowDown = document.getElementById("items-arrow-down-icon")
+    }
+
+    if(arrowDown.style.display == ""){
+        arrowUp.setAttribute("style", "display: flex")
+        arrowDown.setAttribute("style", "display: none")
+    }
+    
+    if(arrowDown.style.display === "none"){
+        arrowUp.setAttribute("style", "display: none")
+        arrowDown.setAttribute("style", "display: flex")
+    }else{
+        arrowDown.setAttribute("style", "display: none")
+        arrowUp.setAttribute("style", "display: flex")
+    }
 }
 
 

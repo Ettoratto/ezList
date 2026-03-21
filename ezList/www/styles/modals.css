@@ -109,11 +109,13 @@
 
 .sort-select button {
 
+    border: 1px solid black;
+    
     height: 4vh;
     width: 20vw;
 }
 
 .sort-select:focus {
 
-    border: none;
+    outline: none;
 }
