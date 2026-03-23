@@ -8,9 +8,9 @@
     overflow-x: hidden;
 }
 
-#list-container {
+#lists-container {
     
-    flex-direction: row;
+    flex-direction: row-reverse;
     width: 100%;
 
     flex-wrap: wrap;
@@ -19,6 +19,7 @@
 .card-container::before {
     content: '';
     margin-top: auto;
+    margin-left: auto;
 }
 
 .list-card {

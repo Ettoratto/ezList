@@ -1,3 +1,6 @@
+/**
+ * Creates a new list from popup input and renders it.
+ */
 function createNewList() {
 
     let listName = document.getElementById("new-list-name-input").value
@@ -12,6 +15,9 @@ function createNewList() {
     renderSingleListCard(newList)
 }
 
+/**
+ * Creates a new item from popup form input and renders it.
+ */
 function createNewItem() {
 
     const itemName = document.getElementById("new-item-name-input").value
@@ -26,6 +32,7 @@ function createNewItem() {
     const itemType = document.getElementById("new-item-type-input").value
     const itemBrand = document.getElementById("new-item-brand-input").value
     const [part1, part2, part3] = crypto.randomUUID().split("-")
+    // Keep a compact id by joining the first UUID segments.
     let itemId = part1 + part2 + part3
 
     const item = {id: itemId, name: itemName, weight: itemWeight, qty: itemQty, price: itemPrice, priceKG: itemPriceKG, type: itemType, brand: itemBrand, wantedIndex: 0}
@@ -37,6 +44,10 @@ function createNewItem() {
     renderSingleItemCard(item)
 }
 
+/**
+ * Selects/deselects a list card and filters visible items accordingly.
+ * @param {string} id
+ */
 function viewList(id){
 
     let card = document.getElementById(id)
@@ -67,6 +78,11 @@ function viewList(id){
     
 }
 
+/**
+ * Prompts the user to choose a target list and adds the item to it.
+ * @param {string} itemId
+ * @returns {Promise<void>}
+ */
 async function addItemToList(itemId) {
 
     const listId = await showListSelection()
@@ -83,6 +99,9 @@ async function addItemToList(itemId) {
     toggleListSelection(false)
 }
 
+/**
+ * Filters list cards by search input.
+ */
 function searchLists(){
 
     const searchInput = document.getElementById("search-list-bar-input").value.toLowerCase().trim()
@@ -92,6 +111,9 @@ function searchLists(){
     return renderListCards(searchResult)
 }   
 
+/**
+ * Filters item cards by search input, scoped to selected list when present.
+ */
 function searchItems(){
 
     const searchInput = document.getElementById("search-item-bar-input").value.toLowerCase().trim()
@@ -115,8 +137,8 @@ function searchItems(){
         filteredItems = newList.items
         .map((itemId) => getItemById(String(itemId)))
         .filter((itemObj) => {
-            if (!itemObj || !itemObj.name) return false;
-            return itemObj.name.toLowerCase().trim().search(searchInput) !== -1;
+            if (!itemObj || !itemObj.name) return false
+            return itemObj.name.toLowerCase().trim().search(searchInput) !== -1
         })
 
     }else
@@ -128,17 +150,96 @@ function searchItems(){
     })
 }
 
+    /**
+     * Sorts lists by the provided criteria.
+     * @param {"name"|"itemsCount"|"cost"|"recent"} sortBy
+     */
 function sortLists(sortBy){
 
-   
+    let sorted = null
+    switch(sortBy){
+
+        case "name":
+            
+            sorted = lists.toSorted((a, b) => a.name.localeCompare(b.name))
+            renderListCards(sorted)
+        break
+
+        case "itemsCount":
+            
+            sorted = lists.toSorted((a, b) => b.items.length - a.items.length )
+            renderListCards(sorted)
+        break
+
+        case "cost":
+
+            sorted = lists.toSorted((a, b) => b.getTotalCost() - a.getTotalCost())
+            renderListCards(sorted)
+        break
+
+        case "recent":
+
+            renderListCards()
+        break
+   } 
+}   
+
+/**
+ * Sorts items by the provided criteria.
+ * @param {"name"|"price"|"brand"|"recent"} sortBy
+ */
+function sortItems(sortBy){
+
+    let sorted = null
+    switch(sortBy){
+
+        case "name":
+
+            sorted = items.sort((a, b) => a.name.localeCompare(b.name))
+            renderItemCards(null, sorted)
+        break
+
+        case "price":
+            
+            sorted = items.sort((a, b) => b.price - a.price)
+            renderItemCards(null, sorted)
+        break
+
+        case "brand":
+
+            sorted = items.sort((a, b) => a.brand.localeCompare(b.brand))
+            
+            renderItemCards(null, sorted)
+        break
+
+        case "recent":
+
+            renderItemCards()
+        break
+    }
+
+    console.log(items)
 }
 
-function sortItems(){
+/**
+ * Inverts current visual order for lists or items and toggles the arrow icon.
+ * @param {boolean} myLists True to invert lists, false to invert items.
+ */
+function invertSort(myLists){
 
-    console.log("ciao")
-}
+    if(myLists)
+        renderListCards(lists.reverse())
+    else{
+        const itemsContainer = document.getElementById("items-container")
+        if(itemsContainer.classList.contains("firstReverseCall")){
+            // First reverse starts from already reverse-rendered cards; remove flag to sync order.
+            
+            itemsContainer.classList.remove("firstReverseCall")
+            renderItemCards(null, items)
+        }else
+            renderItemCards(null, items.reverse())
+    }
 
-function invertSort(lists){
 
-    toggleSortArrow(lists)
+    toggleSortArrow(myLists)
 }

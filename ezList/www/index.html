@@ -37,6 +37,7 @@
                                 <button onmousedown="sortLists('name')">Nome</button>
                                 <button onmousedown="sortLists('itemsCount')">N. Articoli</button>
                                 <button onmousedown="sortLists('cost')">Costo</button>
+                                <button onmousedown="sortLists('recent')">Più recente</button>
                             </div>
 
                             <button onmousedown="event.preventDefault(); toggleSortSelect(true)">
@@ -53,7 +54,7 @@
                         
                     </div>     
                     
-                    <div class="card-container" id="list-container"></div>
+                    <div class="card-container" id="lists-container"></div>
 
                 </div>
 
@@ -71,6 +72,7 @@
                                 <button onmousedown="sortItems('name')">Nome</button>
                                 <button onmousedown="sortItems('price')">Prezzo</button>
                                 <button onmousedown="sortItems('brand')">Marca</button>
+                                <button onmousedown="sortItems('recent')">Più recente</button>
                             </div>
 
                             <button onmousedown="event.preventDefault(); toggleSortSelect(false)">
@@ -87,7 +89,7 @@
                         
                     </div>  
 
-                    <div class="card-container" id="items-container"></div>
+                    <div class="card-container firstReverseCall" id="items-container"></div>
                     
                 </div>
             </div>

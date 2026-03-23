@@ -1,3 +1,7 @@
+/**
+ * Shows or hides the "new list" popup.
+ * @param {boolean} [show]
+ */
 function toggleNewListPopup(show) {
 
     const popup = document.getElementById("new-list-popup")
@@ -13,6 +17,10 @@ function toggleNewListPopup(show) {
     }
 }
 
+/**
+ * Shows or hides the "new item" popup.
+ * @param {boolean} [show]
+ */
 function toggleNewItemPopup(show) {
 
     const popup = document.getElementById("new-item-popup")
@@ -28,6 +36,10 @@ function toggleNewItemPopup(show) {
     }
 }
 
+/**
+ * Shows or hides the list selection overlay.
+ * @param {boolean} [show]
+ */
 function toggleListSelection(show){
 
     const listSelection = document.getElementById("list-selection")
@@ -39,6 +51,10 @@ function toggleListSelection(show){
         listSelection.setAttribute("style", "display: none")
 }
 
+/**
+ * Shows or hides the item detail overlay.
+ * @param {boolean} [show]
+ */
 function toggleItemDisplay(show){
 
     const itemDisplay = document.getElementById("item-display")
@@ -50,6 +66,10 @@ function toggleItemDisplay(show){
         itemDisplay.setAttribute("style", "display: none")
 }
 
+/**
+ * Toggles the sort dropdown visibility and focuses it for onblur-close behavior.
+ * @param {boolean} sortByList True for list sort menu, false for item sort menu.
+ */
 function toggleSortSelect(sortByList){
 
     let id = sortByList ? "lists-sort-element" : "items-sort-element"
@@ -59,11 +79,16 @@ function toggleSortSelect(sortByList){
         sortElement.setAttribute("style", "display: none")
     } else {
         sortElement.setAttribute("style", "display: flex")
+        // Focus lets the menu close automatically when it loses focus.
         sortElement.focus()
     }
 }
 
 
+/**
+ * Switches ascending/descending icon for list or item sorting.
+ * @param {boolean} lists True for list arrows, false for item arrows.
+ */
 function toggleSortArrow(lists){
 
     let arrowUp, arrowDown
@@ -76,21 +101,25 @@ function toggleSortArrow(lists){
         arrowDown = document.getElementById("items-arrow-down-icon")
     }
 
-    if(arrowDown.style.display == ""){
+    if(arrowUp.style.display === ""){
         arrowUp.setAttribute("style", "display: flex")
         arrowDown.setAttribute("style", "display: none")
     }
-    
-    if(arrowDown.style.display === "none"){
-        arrowUp.setAttribute("style", "display: none")
-        arrowDown.setAttribute("style", "display: flex")
-    }else{
+
+    if(arrowUp.style.display === "none"){
         arrowDown.setAttribute("style", "display: none")
         arrowUp.setAttribute("style", "display: flex")
+    }else{
+        arrowUp.setAttribute("style", "display: none")
+        arrowDown.setAttribute("style", "display: flex")
     }
 }
 
 
+/**
+ * Renders an overlay to choose a list and resolves with selected list id.
+ * @returns {Promise<string>}
+ */
 function showListSelection(){
 
     return new Promise((resolve) => {
@@ -102,6 +131,7 @@ function showListSelection(){
         lists.forEach(list => {
             
             let card = document.createElement("div")
+            // Resolve Promise on click so caller can await selected target list.
             card.onclick = () => resolve(list.id)
             card.classList.add("list-selection-card")
             card.innerHTML = `
@@ -115,9 +145,13 @@ function showListSelection(){
     });
 }
 
+/**
+ * Renders all list cards or a provided subset.
+ * @param {Array<List>} [myLists=lists]
+ */
 function renderListCards(myLists = lists){
 
-    const listContainer  = document.getElementById("list-container")
+    const listContainer  = document.getElementById("lists-container")
     listContainer.innerHTML = ""
 
     myLists.forEach(list => {
@@ -125,9 +159,13 @@ function renderListCards(myLists = lists){
     });
 }
 
+/**
+ * Renders a single list card.
+ * @param {List} list
+ */
 function renderSingleListCard(list){
 
-    const listContainer  = document.getElementById("list-container")
+    const listContainer  = document.getElementById("lists-container")
 
     let card = document.createElement("div")
     card.setAttribute("onClick", "viewList('" + list.id + "')")
@@ -144,10 +182,22 @@ function renderSingleListCard(list){
 }
 
 
-function renderItemCards(list){
+/**
+ * Renders item cards from a list or from a direct items array.
+ * @param {List|null} list
+ * @param {Array<Object>} [itemsArray]
+ */
+function renderItemCards(list, itemsArray){
 
     const itemContainer = document.getElementById("items-container")
     itemContainer.innerHTML = ""
+
+    if(itemsArray){
+        // Render in reverse to keep the newest cards visually first.
+        for(let i = itemsArray.length - 1; i >= 0; i--)
+            renderSingleItemCard(itemsArray[i])
+        return
+    }
 
     if(!list){
 
@@ -160,12 +210,17 @@ function renderItemCards(list){
 
         list.getItemsArray().forEach(itemId  => {
 
+            // Item ids are stored on list; map each id to its current item object.
             item = getItemById(itemId)
             renderSingleItemCard(item)
         });
     }
 }
 
+/**
+ * Renders a single item card.
+ * @param {Object} item
+ */
 function renderSingleItemCard(item){
 
     const itemContainer = document.getElementById("items-container")
@@ -186,6 +241,10 @@ function renderSingleItemCard(item){
     card.scrollIntoView()
 }
 
+/**
+ * Displays full details for one item inside the item modal.
+ * @param {string} itemId
+ */
 function viewItem(itemId){
 
     const item = getItemById(itemId)
@@ -206,6 +265,11 @@ function viewItem(itemId){
     toggleItemDisplay(true)
 }
 
+/**
+ * Builds reusable HTML fragment for item details.
+ * @param {Object} item
+ * @returns {string}
+ */
 function createItemHTML(item){
 
     return `
