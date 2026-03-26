@@ -149,13 +149,13 @@ function showListSelection(){
  * Renders all list cards or a provided subset.
  * @param {Array<List>} [myLists=lists]
  */
-function renderListCards(myLists = lists){
+function renderListCards(myLists = lists, scrollIntoView = true){
 
     const listContainer  = document.getElementById("lists-container")
     listContainer.innerHTML = ""
 
     myLists.forEach(list => {
-        renderSingleListCard(list)
+        renderSingleListCard(list, scrollIntoView)
     });
 }
 
@@ -163,7 +163,7 @@ function renderListCards(myLists = lists){
  * Renders a single list card.
  * @param {List} list
  */
-function renderSingleListCard(list){
+function renderSingleListCard(list, scrollIntoView = true){
 
     const listContainer  = document.getElementById("lists-container")
 
@@ -178,7 +178,8 @@ function renderSingleListCard(list){
     `
 
     listContainer.appendChild(card)
-    card.scrollIntoView()
+    if(scrollIntoView)
+        card.scrollIntoView()
 }
 
 
@@ -187,7 +188,7 @@ function renderSingleListCard(list){
  * @param {List|null} list
  * @param {Array<Object>} [itemsArray]
  */
-function renderItemCards(list, itemsArray){
+function renderItemCards(list, itemsArray, scrollIntoView = true){
 
     const itemContainer = document.getElementById("items-container")
     itemContainer.innerHTML = ""
@@ -195,7 +196,7 @@ function renderItemCards(list, itemsArray){
     if(itemsArray){
         // Render in reverse to keep the newest cards visually first.
         for(let i = itemsArray.length - 1; i >= 0; i--)
-            renderSingleItemCard(itemsArray[i])
+            renderSingleItemCard(itemsArray[i], scrollIntoView)
         return
     }
 
@@ -203,7 +204,7 @@ function renderItemCards(list, itemsArray){
 
         items.forEach(item => {
             
-            renderSingleItemCard(item)
+            renderSingleItemCard(item, scrollIntoView)
         });
 
     }else{
@@ -212,7 +213,7 @@ function renderItemCards(list, itemsArray){
 
             // Item ids are stored on list; map each id to its current item object.
             item = getItemById(itemId)
-            renderSingleItemCard(item)
+            renderSingleItemCard(item, scrollIntoView)
         });
     }
 }
@@ -221,7 +222,7 @@ function renderItemCards(list, itemsArray){
  * Renders a single item card.
  * @param {Object} item
  */
-function renderSingleItemCard(item){
+function renderSingleItemCard(item, scrollIntoView = true){
 
     const itemContainer = document.getElementById("items-container")
 
@@ -238,7 +239,8 @@ function renderSingleItemCard(item){
     `
 
     itemContainer.appendChild(card)
-    card.scrollIntoView()
+    if(scrollIntoView)
+        card.scrollIntoView()
 }
 
 /**

@@ -6,21 +6,17 @@
     overflow-y: scroll;
     height: 100%;
     overflow-x: hidden;
+    box-sizing: border-box;
+    margin-top: 1vh;
 }
 
 #lists-container {
     
-    flex-direction: row-reverse;
+    flex-direction: row;
     width: 100%;
-
     flex-wrap: wrap;
 }
 
-.card-container::before {
-    content: '';
-    margin-top: auto;
-    margin-left: auto;
-}
 
 .list-card {
 

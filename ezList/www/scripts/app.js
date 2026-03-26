@@ -150,10 +150,10 @@ function searchItems(){
     })
 }
 
-    /**
-     * Sorts lists by the provided criteria.
-     * @param {"name"|"itemsCount"|"cost"|"recent"} sortBy
-     */
+/**
+ * Sorts lists by the provided criteria.
+ * @param {"name"|"itemsCount"|"cost"|"recent"} sortBy
+ */
 function sortLists(sortBy){
 
     let sorted = null
@@ -162,24 +162,24 @@ function sortLists(sortBy){
         case "name":
             
             sorted = lists.toSorted((a, b) => a.name.localeCompare(b.name))
-            renderListCards(sorted)
+            renderListCards(sorted, false)
         break
 
         case "itemsCount":
             
             sorted = lists.toSorted((a, b) => b.items.length - a.items.length )
-            renderListCards(sorted)
+            renderListCards(sorted, false)
         break
 
         case "cost":
 
             sorted = lists.toSorted((a, b) => b.getTotalCost() - a.getTotalCost())
-            renderListCards(sorted)
+            renderListCards(sorted, false)
         break
 
         case "recent":
 
-            renderListCards()
+            renderListCards(null, false)
         break
    } 
 }   
@@ -196,25 +196,25 @@ function sortItems(sortBy){
         case "name":
 
             sorted = items.sort((a, b) => a.name.localeCompare(b.name))
-            renderItemCards(null, sorted)
+            renderItemCards(null, sorted, false)
         break
 
         case "price":
             
             sorted = items.sort((a, b) => b.price - a.price)
-            renderItemCards(null, sorted)
+            renderItemCards(null, sorted, false)
         break
 
         case "brand":
 
             sorted = items.sort((a, b) => a.brand.localeCompare(b.brand))
             
-            renderItemCards(null, sorted)
+            renderItemCards(null, sorted, false)
         break
 
         case "recent":
 
-            renderItemCards()
+            renderItemCards(null, null, false, false)
         break
     }
 
@@ -227,19 +227,24 @@ function sortItems(sortBy){
  */
 function invertSort(myLists){
 
-    if(myLists)
-        renderListCards(lists.reverse())
-    else{
+    if(myLists){
+        const container = document.getElementById("lists-container");
+        
+        // Inverte fisicamente l'ordine degli elementi nel DOM
+        Array.from(container.children).reverse().forEach(child => {
+            container.appendChild(child)
+        })
+        
+    } else {
         const itemsContainer = document.getElementById("items-container")
         if(itemsContainer.classList.contains("firstReverseCall")){
-            // First reverse starts from already reverse-rendered cards; remove flag to sync order.
-            
+            // First click must also invert order; remove setup flag and apply reverse.
             itemsContainer.classList.remove("firstReverseCall")
-            renderItemCards(null, items)
-        }else
             renderItemCards(null, items.reverse())
+        } else {
+            renderItemCards(null, items.reverse())
+        }
     }
-
 
     toggleSortArrow(myLists)
 }
