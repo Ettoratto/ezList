@@ -23,11 +23,11 @@
 
             <div class="lists-items-containers">
             
-                <div class="dashboard-lists-sidebar" id="dashboard-lists-sidebar">
+                <div class="dashboard-lists-container" id="dashboard-lists-container">
                     
                    <div class="interaction-menu">
                         <div class="search-bar-container">
-                            <svg class="lists-search-bar-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
+                            <svg class="search-bar-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
                             
                             <input oninput="searchLists()" class="search-list-bar-input" id="search-list-bar-input" placeholder="Cerca liste">       
                         </div>
@@ -58,12 +58,12 @@
 
                 </div>
 
-                <div class="dashboard-items-sidebar" id="dashboard-items-sidebar">
+                <div class="dashboard-items-container" id="dashboard-items-container">
 
                     <div class="interaction-menu">
                         <div class="search-bar-container">
 
-                            <svg class="lists-search-bar-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
+                            <svg class="search-bar-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
                             <input oninput="searchItems()" id="search-item-bar-input" type="search" placeholder="Cerca articoli">
                         </div>
                         <div class="filter-menu-container">
@@ -95,13 +95,13 @@
             </div>
 
             <div class="dashboard-menu-container">
-                <div class="dashboard-lists-menu">
+                <div class="dashboard-menu">
                     <button onclick="toggleNewListPopup(true)">
                         Nuova lista
                     </button>
                 </div>
 
-                <div class="dashboard-items-menu">
+                <div class="dashboard-menu">
                         <button onclick="toggleNewItemPopup(true)">
                             Nuovo prodotto
                         </button>

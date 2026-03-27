@@ -1,6 +1,11 @@
 let lists = []
 let items = []
 
+let currentListSort = "recent"
+let currentItemSort = "recent"
+let isListSortInverted = false
+let isItemSortInverted = false
+
 /**
  * Represents a shopping list and the related item ids.
  */
