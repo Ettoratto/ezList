@@ -161,7 +161,6 @@ function renderListCards(myLists = lists, scrollIntoView = true){
 
     myLists.forEach(list => {
         renderSingleListCard(list, scrollIntoView)
-        renderSingleListCard(list, scrollIntoView)
     });
 }
 
