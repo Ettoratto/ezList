@@ -103,16 +103,16 @@
     column-gap: 10vh;
     z-index: 10;
     background-color: #fff;
-    top: 5vh;
-    right: 20vw;
+    top: 0vh;
+    right: 7vw;
 }
 
 .sort-select button {
 
     border: 1px solid black;
     
-    height: 4vh;
-    width: 20vw;
+    height: 5vh;
+    width: 25vw;
 }
 
 .sort-select:focus {

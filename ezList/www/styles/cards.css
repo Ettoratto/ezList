@@ -6,20 +6,25 @@
     overflow-y: scroll;
     height: 100%;
     overflow-x: hidden;
+    box-sizing: border-box;
+    margin-top: 1vh;
+<<<<<<< HEAD
 }
 
-#list-container {
+.card-container::before{
+    content: "";
+    margin-top: auto;
+=======
+>>>>>>> d7cb879d3b477796a903391517b500a3203610a6
+}
+
+#lists-container {
     
     flex-direction: row;
     width: 100%;
-
     flex-wrap: wrap;
 }
 
-.card-container::before {
-    content: '';
-    margin-top: auto;
-}
 
 .list-card {
 
