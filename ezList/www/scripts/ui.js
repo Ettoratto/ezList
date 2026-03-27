@@ -98,6 +98,7 @@ function toggleSortArrow(lists){
     let arrowUp, arrowDown
 
     if(lists){
+        
         arrowUp = document.getElementById("lists-arrow-up-icon")
         arrowDown = document.getElementById("lists-arrow-down-icon")
     }else{
@@ -105,9 +106,9 @@ function toggleSortArrow(lists){
         arrowDown = document.getElementById("items-arrow-down-icon")
     }
 
-    if(arrowUp.style.display === ""){
-        arrowUp.setAttribute("style", "display: flex")
-        arrowDown.setAttribute("style", "display: none")
+    if(arrowDown.style.display === ""){
+        arrowDown.setAttribute("style", "display: flex")
+        arrowUp.setAttribute("style", "display: none")
     }
 
     if(arrowUp.style.display === "none"){
@@ -198,9 +199,9 @@ function renderItemCards(list, itemsArray, scrollIntoView = true){
     itemContainer.innerHTML = ""
 
     if(itemsArray){
-        // Render in reverse to keep the newest cards visually first.
-        for(let i = itemsArray.length - 1; i >= 0; i--)
-            renderSingleItemCard(itemsArray[i], scrollIntoView)
+        itemsArray.forEach(item => {
+            renderSingleItemCard(item, scrollIntoView)
+        })
         return
     }
 
