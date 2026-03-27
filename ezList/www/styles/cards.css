@@ -8,11 +8,14 @@
     overflow-x: hidden;
     box-sizing: border-box;
     margin-top: 1vh;
+<<<<<<< HEAD
 }
 
 .card-container::before{
     content: "";
     margin-top: auto;
+=======
+>>>>>>> d7cb879d3b477796a903391517b500a3203610a6
 }
 
 #lists-container {
