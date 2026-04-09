@@ -20,32 +20,25 @@ resizer.addEventListener("touchstart", function(e) {
 
 document.addEventListener("touchmove", function(e) {
     
+    if(!isDragging) return 
+
+
     const viewportHeight = window.innerHeight
     const pos = e.touches[0]
 
-    if(!isDragging) return 
-
     let delta = Math.round(pos.clientY - previousY)
 
-    if(delta > 400 || delta < -250)
-        return
+    let newItemsHeight = Math.round(((oldItemsHeight - delta) / viewportHeight) * 100)
+    let newListsHeight = Math.round(((oldListsHeight + delta) / viewportHeight) * 100)
 
-    if(delta < 0){
-        
-        let newHeight = ((oldItemsHeight - delta) / viewportHeight) * 100
-        itemsContainer.setAttribute("style", "height:" + (newHeight) + "vh")
-
-        newHeight = ((oldListsHeight + delta) / viewportHeight) * 100
-        listsContainer.setAttribute("style", "height:" + (newHeight) + "vh")
-        
-    }else{
-
-        let newHeight = ((oldItemsHeight - delta) / viewportHeight) * 100
-        itemsContainer.setAttribute("style", "height:" + (newHeight) + "vh")
-
-        newHeight = ((oldListsHeight + delta) / viewportHeight) * 100
-        listsContainer.setAttribute("style", "height:" + (newHeight) + "vh")
-    }
+    if(    newListsHeight <= 25
+        || newListsHeight >= 65
+        || newItemsHeight <= 25
+        || newItemsHeight >= 65
+    ) return
+    
+    itemsContainer.setAttribute("style", "height:" + (newItemsHeight) + "vh")
+    listsContainer.setAttribute("style", "height:" + (newListsHeight) + "vh")
 
 })
 
