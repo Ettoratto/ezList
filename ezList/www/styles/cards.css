@@ -2,20 +2,20 @@
 
     display: flex;
     flex-direction: column-reverse;
+    justify-content: flex-start;
     scroll-behavior: smooth;
     overflow-y: scroll;
     height: 100%;
     overflow-x: hidden;
     box-sizing: border-box;
     margin-top: 1vh;
-<<<<<<< HEAD
+    row-gap: 1vh;
 }
 
 .card-container::before{
     content: "";
     margin-top: auto;
-=======
->>>>>>> d7cb879d3b477796a903391517b500a3203610a6
+
 }
 
 #lists-container {
@@ -33,6 +33,7 @@
     padding: 0 1vw 0 1vw;
     margin: 2vw;
     width: 24vw;
+    max-height: 20vh;
     overflow-wrap: break-word;
 }
 

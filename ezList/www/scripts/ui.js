@@ -122,30 +122,24 @@ function toggleSortArrow(lists){
 
 
 /**
- * Renders an overlay to choose a list and resolves with selected list id.
- * @returns {Promise<string>}
+ * Renders an overlay to choose a list
+ * @param  {String} [itemId] id of the item to add
  */
-function showListSelection(){
+function showListSelection(itemId){
 
-    return new Promise((resolve) => {
+    let container = document.getElementById("list-selection")
+    container.innerHTML = ""
+    toggleListSelection(true)
 
-        let container = document.getElementById("list-selection")
-        container.innerHTML = ""
-        toggleListSelection(true)
-
-        lists.forEach(list => {
-            
-            let card = document.createElement("div")
-            // Resolve Promise on click so caller can await selected target list.
-            card.onclick = () => resolve(list.id)
-            card.classList.add("list-selection-card")
-            card.innerHTML = `
-                <h2>${list.name}</h2>
-            `
-
-            container.appendChild(card)
-
-        })
+    lists.forEach(list => {
+        
+        let card = document.createElement("div")
+        card.onclick = addItemToList(itemId, list.id)
+        card.classList.add("list-selection-card")
+        card.innerHTML = `
+            <h2>${list.name}</h2>
+        `
+        container.appendChild(card)
 
     })
 }
@@ -244,7 +238,7 @@ function renderSingleItemCard(item, scrollIntoView = true){
             ${itemInfo}
             </div>
 
-        <button onClick=addItemToList('${item.id}')>+</button>
+        <button onClick=showListSelection('${item.id}')>+</button>
     `
 
     itemContainer.appendChild(card)

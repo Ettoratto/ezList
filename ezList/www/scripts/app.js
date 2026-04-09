@@ -1,3 +1,63 @@
+const resizer = document.getElementById("resizer")
+const listsContainer = document.getElementById("lists-panel-container")
+const itemsContainer = document.getElementById("items-panel-container")
+let previousY = null
+let isDragging = false
+let oldItemsHeight = 0
+let oldListsHeight = 0
+
+
+resizer.addEventListener("touchstart", function(e) {
+
+    previousY = e.touches[0].clientY
+    isDragging = true
+
+    oldItemsHeight = itemsContainer.getBoundingClientRect().height
+    oldListsHeight = listsContainer.getBoundingClientRect().height
+
+    document.body.style.userSelect = 'none'
+})
+
+document.addEventListener("touchmove", function(e) {
+    
+    const viewportHeight = window.innerHeight
+    const pos = e.touches[0]
+
+    if(!isDragging) return 
+
+    let delta = Math.round(pos.clientY - previousY)
+
+    if(delta > 400 || delta < -250)
+        return
+
+    if(delta < 0){
+        
+        let newHeight = ((oldItemsHeight - delta) / viewportHeight) * 100
+        itemsContainer.setAttribute("style", "height:" + (newHeight) + "vh")
+
+        newHeight = ((oldListsHeight + delta) / viewportHeight) * 100
+        listsContainer.setAttribute("style", "height:" + (newHeight) + "vh")
+        
+    }else{
+
+        let newHeight = ((oldItemsHeight - delta) / viewportHeight) * 100
+        itemsContainer.setAttribute("style", "height:" + (newHeight) + "vh")
+
+        newHeight = ((oldListsHeight + delta) / viewportHeight) * 100
+        listsContainer.setAttribute("style", "height:" + (newHeight) + "vh")
+    }
+
+})
+
+
+document.addEventListener("touchend", function(){
+
+    isDragging = false
+})
+
+
+
+
 /**
  * Creates a new list from popup input and renders it.
  */
@@ -78,13 +138,9 @@ function viewList(id){
 
 /**
  * Prompts the user to choose a target list and adds the item to it.
- * @param {string} itemId
- * @returns {Promise<void>}
+ * @param {string} itemId listId
  */
-async function addItemToList(itemId) {
-
-    const listId = await showListSelection()
-    if (!listId) return
+ function addItemToList(itemId, listId) {
 
     let selectedList = lists.find(l => l.id === listId)
     selectedList.addItem(itemId)
@@ -94,7 +150,6 @@ async function addItemToList(itemId) {
     searchLists()
     saveLists()
 
-    toggleListSelection(false)
 }
 
 /**

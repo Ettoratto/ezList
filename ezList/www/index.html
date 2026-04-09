@@ -12,18 +12,12 @@
 
     </head>
     <body onload="loadLists()">
-        
-        <script src="scripts/data.js" defer></script>
-        <script src="scripts/storage.js" defer></script>
-        <script src="scripts/ui.js" defer></script>
-        <script src="scripts/app.js" defer></script>
-
 
         <div class="container">
 
             <div class="lists-items-containers">
             
-                <div class="dashboard-lists-container" id="dashboard-lists-container">
+                <div class="lists-panel-container" id="lists-panel-container">
                     
                    <div class="interaction-menu">
                         <div class="search-bar-container">
@@ -52,13 +46,15 @@
                             </button>
                         </div>
                         
-                    </div>     
-                    
+                    </div>   
+
                     <div class="card-container" id="lists-container"></div>
 
                 </div>
 
-                <div class="dashboard-items-container" id="dashboard-items-container">
+                <div id="resizer" class="resizer"></div>
+
+                <div class="items-panel-container" id="items-panel-container">
 
                     <div class="interaction-menu">
                         <div class="search-bar-container">
@@ -94,14 +90,14 @@
                 </div>
             </div>
 
-            <div class="dashboard-menu-container">
-                <div class="dashboard-menu">
+            <div class="action-menu-container">
+                <div class="action-menu">
                     <button onclick="toggleNewListPopup(true)">
                         Nuova lista
                     </button>
                 </div>
 
-                <div class="dashboard-menu">
+                <div class="action-menu">
                         <button onclick="toggleNewItemPopup(true)">
                             Nuovo prodotto
                         </button>
@@ -146,6 +142,12 @@
 
         <div class="item-display" id="item-display" onclick="toggleItemDisplay(false)">
         </div>
+
+        
+        <script src="scripts/app.js"></script>
+        <script src="scripts/data.js"></script>
+        <script src="scripts/storage.js"></script>
+        <script src="scripts/ui.js"></script>
 
     </body>
 </html>
