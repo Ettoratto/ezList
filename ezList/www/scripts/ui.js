@@ -121,6 +121,43 @@ function toggleSortArrow(lists){
 }
 
 
+
+/**
+ * Selects/deselects a list card and filters visible items accordingly.
+ * @param {string} id
+ */
+function viewList(id){
+
+    getListById(id).toggleListSelection()
+
+    let card = document.getElementById(id)
+
+    if(card.classList.contains("selected-list-card")){
+        card.classList.remove("selected-list-card")
+
+    }else{
+
+        for(let i = 0; i < lists.length; i++){
+
+            let listElement = document.getElementById(lists[i].id)
+
+            if(!listElement)
+                continue
+
+            if(listElement.classList.contains("selected-list-card")){
+                listElement.classList.remove("selected-list-card")
+                break
+            }
+        } 
+        card.classList.add("selected-list-card")   
+    }
+
+    renderItemsFromState(id)
+    
+}
+
+
+
 /**
  * Renders an overlay to choose a list
  * @param  {String} [itemId] id of the item to add
@@ -186,54 +223,56 @@ function renderSingleListCard(list, scrollIntoView = true){
 
 /**
  * Renders item cards from a list or from a direct items array.
- * @param {List|null} list
  * @param {Array<Object>} [itemsArray]
  */
-function renderItemCards(list, itemsArray, scrollIntoView = true){
+function renderItemCards(itemsArray, scrollIntoView = true, selectedListId = null){
 
     const itemContainer = document.getElementById("items-container")
     itemContainer.innerHTML = ""
 
     if(itemsArray){
+
+        let withCheckbox = false
+        if(getListById(selectedListId).isSelected) withCheckbox = true
+
         itemsArray.forEach(item => {
-            renderSingleItemCard(item, scrollIntoView)
+            renderSingleItemCard(item, scrollIntoView, withCheckbox)
         })
         return
     }
 
-    if(!list){
-
-        items.forEach(item => {
-            
-            renderSingleItemCard(item, scrollIntoView)
-            renderSingleItemCard(item, scrollIntoView)
-        });
-
-    }else{
-
-        list.getItemsArray().forEach(itemId  => {
-
-            // Item ids are stored on list; map each id to its current item object.
-            item = getItemById(itemId)
-            renderSingleItemCard(item, scrollIntoView)
-            renderSingleItemCard(item, scrollIntoView)
-        });
-    }
+    items.forEach(item => {
+        
+        renderSingleItemCard(item, scrollIntoView)
+        renderSingleItemCard(item, scrollIntoView)
+    })
 }
 
 /**
  * Renders a single item card.
  * @param {Object} item
  */
-function renderSingleItemCard(item, scrollIntoView = true){
+function renderSingleItemCard(item, scrollIntoView = true, withCheckbox = false){
 
     const itemContainer = document.getElementById("items-container")
+
+    let checkbox = ""
+
+    if(withCheckbox)
+        checkbox = `
+    
+        <input type="checkbox" id="item-checkbox" onchange="itemChecked('${item.id}')">
+
+    `
 
     const card = document.createElement("div")
     card.classList.add("item-card")
     let itemInfo = createItemHTML(item)
     card.innerHTML = `
+        
+        ${checkbox}
         <div class="item-card-info" onclick="viewItem('${item.id}')">
+            
             <h4>${item.name}</h4><br>
             ${itemInfo}
             </div>
@@ -281,7 +320,7 @@ function createItemHTML(item){
 
         <span> 
             |Prezzo: ${item.price || "/"}€ <br> 
-            |Prezzo/Kg${item.priceKG || "/"} <br>
+            |Prezzo/Kg: ${item.priceKG || "/"} <br>
             |Marca: ${item.brand || "/"} <br>
         </span>
         <span>

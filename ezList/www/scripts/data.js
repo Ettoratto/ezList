@@ -16,6 +16,7 @@ class List {
         this.name = name
         this.id = id || crypto.randomUUID().split("-")[0]
         this.items = items || []
+        this.isSelected = false
     }
 
 
@@ -80,6 +81,14 @@ class List {
     getItemsCount(){
 
         return this.items.length
+    }
+
+    /**
+     * Toggles list selection state.
+     */
+    toggleListSelection(){
+
+        this.isSelected = !this.isSelected
     }
 
 }

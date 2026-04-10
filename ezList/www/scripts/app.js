@@ -65,7 +65,7 @@ function createNewList() {
 
     toggleNewListPopup(false)
     saveLists()
-    searchLists()
+    renderListsFromState()
 }
 
 /**
@@ -94,39 +94,7 @@ function createNewItem() {
 
     toggleNewItemPopup(false)
     saveLists()
-    searchItems()
-}
-
-/**
- * Selects/deselects a list card and filters visible items accordingly.
- * @param {string} id
- */
-function viewList(id){
-
-    let card = document.getElementById(id)
-
-    if(card.classList.contains("selected-list-card")){
-        card.classList.remove("selected-list-card")
-
-    }else{
-
-        for(let i = 0; i < lists.length; i++){
-
-            let listElement = document.getElementById(lists[i].id)
-
-            if(!listElement)
-                continue
-
-            if(listElement.classList.contains("selected-list-card")){
-                listElement.classList.remove("selected-list-card")
-                break
-            }
-        } 
-        card.classList.add("selected-list-card")   
-    }
-
-    searchItems()
-    
+    renderItemsFromState()
 }
 
 /**
@@ -140,7 +108,7 @@ function viewList(id){
 
     console.log("lists: " + lists)
     
-    searchLists()
+    renderListsFromState()
     saveLists()
 
 }
@@ -160,6 +128,7 @@ function getListSearchResults(){
  * @returns {string|null}
  */
 function getSelectedListId(){
+
     let listId = null
 
     for(let i = 0; i < lists.length; i++){
@@ -180,6 +149,7 @@ function getSelectedListId(){
  * @returns {Array<Object>}
  */
 function getItemSearchResults(){
+
     const searchInput = document.getElementById("search-item-bar-input").value.toLowerCase().trim()
     const selectedListId = getSelectedListId()
     const selectedList = getListById(selectedListId)
@@ -226,13 +196,21 @@ function sortListsArray(listsArray, sortBy){
  */
 function sortItemsArray(itemsArray, sortBy){
     switch(sortBy){
+        
         case "name":
             return itemsArray.toSorted((a, b) => a.name.localeCompare(b.name))
+        
         case "price":
             return itemsArray.toSorted((a, b) => b.price - a.price)
+        
         case "brand":
             return itemsArray.toSorted((a, b) => a.brand.localeCompare(b.brand))
+
+        case "wanted":
+            return itemsArray.toSorted((a, b) => b.wantedIndex - a.wantedIndex)
+
         case "recent":
+            
         default:
             return [...itemsArray]
     }
@@ -242,6 +220,7 @@ function sortItemsArray(itemsArray, sortBy){
  * Builds and renders list cards from current search/sort/direction state.
  */
 function renderListsFromState(){
+
     let searchResult = getListSearchResults()
     searchResult = sortListsArray(searchResult, currentListSort)
 
@@ -254,28 +233,15 @@ function renderListsFromState(){
 /**
  * Builds and renders item cards from current search/sort/direction state.
  */
-function renderItemsFromState(){
+function renderItemsFromState(selectedListId = null){
+
     let filteredItems = getItemSearchResults()
     filteredItems = sortItemsArray(filteredItems, currentItemSort)
 
     if(isItemSortInverted)
         filteredItems.reverse()
 
-    renderItemCards(null, filteredItems, false)
-}
-
-/**
- * Filters list cards by search input.
- */
-function searchLists(){
-    renderListsFromState()
-}
-
-/**
- * Filters item cards by search input, scoped to selected list when present.
- */
-function searchItems(){
-    renderItemsFromState()
+    renderItemCards(filteredItems, false, selectedListId)
 }
 
 /**
@@ -283,6 +249,7 @@ function searchItems(){
  * @param {"name"|"itemsCount"|"cost"|"recent"} sortBy
  */
 function sortLists(sortBy){
+
     currentListSort = sortBy
     renderListsFromState()
 }   
@@ -292,6 +259,7 @@ function sortLists(sortBy){
  * @param {"name"|"price"|"brand"|"recent"} sortBy
  */
 function sortItems(sortBy){
+
     currentItemSort = sortBy
     renderItemsFromState()
 }
