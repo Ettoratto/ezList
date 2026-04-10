@@ -263,3 +263,14 @@ function sortItems(sortBy){
     currentItemSort = sortBy
     renderItemsFromState()
 }
+
+
+function searchItems(){
+
+    renderItemsFromState()
+}
+
+function searchLists(){
+
+    renderListsFromState()
+}

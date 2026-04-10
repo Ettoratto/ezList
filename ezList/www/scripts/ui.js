@@ -231,10 +231,10 @@ function renderItemCards(itemsArray, scrollIntoView = true, selectedListId = nul
     itemContainer.innerHTML = ""
 
     if(itemsArray){
-
+        let list = getListById(selectedListId)
         let withCheckbox = false
-        if(getListById(selectedListId).isSelected) withCheckbox = true
-
+        if(list && list.isSelected) withCheckbox = true
+ 
         itemsArray.forEach(item => {
             renderSingleItemCard(item, scrollIntoView, withCheckbox)
         })
