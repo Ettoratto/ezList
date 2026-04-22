@@ -30,9 +30,10 @@
 
     border: 1px solid black;
 
-    padding: 0 1vw 0 1vw;
-    margin: 2vw;
-    width: 24vw;
+    padding: 0 8px;
+    margin: 6px;
+    width: calc(50% - 12px);
+    min-width: 130px;
     max-height: 20vh;
     overflow-wrap: break-word;
 }
@@ -46,13 +47,13 @@
     width: 100%;
     align-items: center;
 
-    padding: 0 1vw;
+    padding: 0 8px;
     box-sizing: border-box;
 }
 
 .item-card span {
 
-    margin: 1vw;
+    margin: 8px;
 }
 
 .item-card button {
@@ -87,8 +88,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 80vw;
+    width: min(80vw, 420px);
     border: 1px solid black;
     background-color: #fff;
-    padding: 2vh 2vw;
+    padding: 12px;
 }

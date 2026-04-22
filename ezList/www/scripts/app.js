@@ -7,6 +7,12 @@ let oldItemsHeight = 0
 let oldListsHeight = 0
 
 
+function thelog(){
+
+   console.log(document.body.clientHeight)
+   console.log(document.body.clientWidth)
+}
+
 resizer.addEventListener("touchstart", function(e) {
 
     previousY = e.touches[0].clientY
@@ -26,15 +32,15 @@ document.addEventListener("touchmove", function(e) {
     const viewportHeight = window.innerHeight
     const pos = e.touches[0]
 
-    let delta = Math.round(pos.clientY - previousY)
+    let delta = pos.clientY - previousY
 
-    let newItemsHeight = Math.round(((oldItemsHeight - delta) / viewportHeight) * 100)
-    let newListsHeight = Math.round(((oldListsHeight + delta) / viewportHeight) * 100)
+    let newItemsHeight = ((oldItemsHeight - delta) / viewportHeight) * 100
+    let newListsHeight = ((oldListsHeight + delta) / viewportHeight) * 100
 
-    if(    newListsHeight <= 25
-        || newListsHeight >= 65
-        || newItemsHeight <= 25
-        || newItemsHeight >= 65
+    if(    newListsHeight < 25
+        || newListsHeight > 65
+        || newItemsHeight < 25
+        || newItemsHeight > 65
     ) return
     
     itemsContainer.setAttribute("style", "height:" + (newItemsHeight) + "vh")
