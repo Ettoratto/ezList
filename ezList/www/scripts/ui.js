@@ -183,20 +183,22 @@ function viewList(id){
  */
 function showListSelection(itemId){
 
-    let container = document.getElementById("list-selection")
+    const container = document.getElementById("list-selection")
     container.innerHTML = ""
     toggleListSelection(true)
 
     lists.forEach(list => {
-        
-        let card = document.createElement("div")
-        card.onclick = addItemToList(itemId, list.id)
-        card.classList.add("list-selection-card")
-        card.innerHTML = `
-            <h2>${list.name}</h2>
-        `
-        container.appendChild(card)
 
+        if(list.findItemById(itemId) == undefined){
+            
+            const card = document.createElement("div")
+            card.onclick = () => addItemToList(itemId, list.getId())
+            card.classList.add("list-selection-card")
+            card.innerHTML = `
+                <h2>${list.name}</h2>
+            `
+            container.appendChild(card)
+        }
     })
 }
 
@@ -246,7 +248,6 @@ function renderSingleListCard(list, scrollIntoView = true){
  */
 function renderItemCards(itemsArray, scrollIntoView = true, selectedListId = null){
 
-    console.log("renderitems")
     const itemContainer = document.getElementById("items-container")
     itemContainer.innerHTML = ""
 

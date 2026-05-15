@@ -50,10 +50,8 @@ function createNewItem() {
  */
  function addItemToList(itemId, listId) {
 
-    let selectedList = lists.find(l => l.id === listId)
+    let selectedList = lists.find(l => l.getId() === listId)
     selectedList.addItem(itemId)
-
-    console.log("lists: " + lists)
     
     renderListsFromState()
     saveLists()
@@ -182,7 +180,6 @@ function renderListsFromState(){
  */
 function renderItemsFromState(selectedListId = null){
 
-    console.log("itemsfromstate")
     let filteredItems = getItemSearchResults()
     filteredItems = sortItemsArray(filteredItems, currentItemSort)
 

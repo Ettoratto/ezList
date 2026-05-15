@@ -91,6 +91,11 @@ class List {
         this.isSelected = !this.isSelected
     }
 
+    getId(){
+
+        return this.id
+    }
+
 }
 
 /**
