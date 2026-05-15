@@ -1,3 +1,22 @@
+
+function toggleListSidebar(show){
+
+
+    const container = document.getElementById("lists-sidebar-container")
+    const shouldShow = typeof show === "boolean" ? show : container.style.display !== "flex"
+
+    container.classList.toggle('active');
+
+   /*  if(shouldShow)
+        container.setAttribute("style", "display: flex")
+    else
+        container.setAttribute("style", "display: none")
+
+ */
+}
+
+
+
 /**
  * Shows or hides the "new list" popup.
  * @param {boolean} [show]
@@ -209,8 +228,8 @@ function renderSingleListCard(list, scrollIntoView = true){
     card.classList.add("list-card")
     card.innerHTML = `
         <h2>${list.name}</h2>
-        <p>Totale: ${list.getTotalCost()}€</p>
-        <p>Articoli: ${list.getItemsCount()}</p>
+        <span>Totale: ${list.getTotalCost()}€</span>
+        <span>Articoli: ${list.getItemsCount()}</span>
     `
 
     listContainer.appendChild(card)
@@ -227,6 +246,7 @@ function renderSingleListCard(list, scrollIntoView = true){
  */
 function renderItemCards(itemsArray, scrollIntoView = true, selectedListId = null){
 
+    console.log("renderitems")
     const itemContainer = document.getElementById("items-container")
     itemContainer.innerHTML = ""
 
@@ -243,7 +263,6 @@ function renderItemCards(itemsArray, scrollIntoView = true, selectedListId = nul
 
     items.forEach(item => {
         
-        renderSingleItemCard(item, scrollIntoView)
         renderSingleItemCard(item, scrollIntoView)
     })
 }

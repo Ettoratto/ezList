@@ -1,3 +1,39 @@
+
+.lists-sidebar-container {
+
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    transform: translateX(-100%);
+  
+    transition: transform 0.25s ease-in-out;
+
+    overflow: hidden;
+}
+
+.lists-sidebar-container.active {
+
+    transform: translateX(0)
+}
+
+.lists-sidebar{
+
+    position: relative;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    height: 100%;
+
+    background-color: red;
+
+}
+
+
 .new-list-popup {
 
     z-index: 1000;
@@ -6,7 +42,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
     justify-content: center;
     align-items: center;
 

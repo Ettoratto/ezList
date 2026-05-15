@@ -1,62 +1,3 @@
-const resizer = document.getElementById("resizer")
-const listsContainer = document.getElementById("lists-panel-container")
-const itemsContainer = document.getElementById("items-panel-container")
-let previousY = null
-let isDragging = false
-let oldItemsHeight = 0
-let oldListsHeight = 0
-
-
-function thelog(){
-
-   console.log(document.body.clientHeight)
-   console.log(document.body.clientWidth)
-}
-
-resizer.addEventListener("touchstart", function(e) {
-
-    previousY = e.touches[0].clientY
-    isDragging = true
-
-    oldItemsHeight = itemsContainer.getBoundingClientRect().height
-    oldListsHeight = listsContainer.getBoundingClientRect().height
-
-    document.body.style.userSelect = 'none'
-})
-
-document.addEventListener("touchmove", function(e) {
-    
-    if(!isDragging) return 
-
-
-    const viewportHeight = window.innerHeight
-    const pos = e.touches[0]
-
-    let delta = pos.clientY - previousY
-
-    let newItemsHeight = ((oldItemsHeight - delta) / viewportHeight) * 100
-    let newListsHeight = ((oldListsHeight + delta) / viewportHeight) * 100
-
-    if(    newListsHeight < 25
-        || newListsHeight > 65
-        || newItemsHeight < 25
-        || newItemsHeight > 65
-    ) return
-    
-    itemsContainer.setAttribute("style", "height:" + (newItemsHeight) + "vh")
-    listsContainer.setAttribute("style", "height:" + (newListsHeight) + "vh")
-
-})
-
-
-document.addEventListener("touchend", function(){
-
-    isDragging = false
-})
-
-
-
-
 /**
  * Creates a new list from popup input and renders it.
  */
@@ -241,6 +182,7 @@ function renderListsFromState(){
  */
 function renderItemsFromState(selectedListId = null){
 
+    console.log("itemsfromstate")
     let filteredItems = getItemSearchResults()
     filteredItems = sortItemsArray(filteredItems, currentItemSort)
 
