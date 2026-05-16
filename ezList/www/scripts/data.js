@@ -14,9 +14,13 @@ class List {
     constructor(name, id, items) {
 
         this.name = name
-        this.id = id || crypto.randomUUID().split("-")[0]
         this.items = items || []
         this.isSelected = false
+        
+        const [part1, part2, part3] = crypto.randomUUID().split("-")
+        const newId = part1 + part2 + part3
+        this.id = id || newId
+        
     }
 
 
@@ -67,9 +71,10 @@ class List {
         let total = 0
         this.items.forEach(itemId => {
             
-            const price = parseFloat(getItemById(itemId).price) || 0
+            const item = getItemById(itemId)
+            const price = item ? parseFloat(item.price) || 0 : 0
             total += price
-        });
+        })
 
         return total
     }
@@ -116,4 +121,14 @@ function getListById(id){
 function getItemById(itemId){
 
     return items.find(item => item.id == itemId)
+}
+
+function increaseItemWI(itemId){
+
+    getItemById(itemId).wantedIndex++
+}
+
+function decreaseItemWI(itemId){
+
+    getItemById(itemId).wantedIndex--
 }

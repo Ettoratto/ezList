@@ -33,7 +33,7 @@ function createNewItem() {
     const itemBrand = document.getElementById("new-item-brand-input").value
     const [part1, part2, part3] = crypto.randomUUID().split("-")
     // Keep a compact id by joining the first UUID segments.
-    let itemId = part1 + part2 + part3
+    const itemId = part1 + part2 + part3
 
     const item = {id: itemId, name: itemName, weight: itemWeight, qty: itemQty, price: itemPrice, priceKG: itemPriceKG, type: itemType, brand: itemBrand, wantedIndex: 0}
 
@@ -218,4 +218,18 @@ function searchItems(){
 function searchLists(){
 
     renderListsFromState()
+}
+
+
+function toggleItemCheck(itemId){
+
+    if(toggleItemCardSelection(itemId))
+        increaseItemWI(itemId)
+    else
+        decreaseItemWI(itemId)
+
+
+    const WIspan = document.getElementById(itemId + "span")
+    WIspan.innerHTML = getItemById(itemId).wantedIndex
+
 }

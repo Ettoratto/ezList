@@ -1,18 +1,17 @@
 
-function toggleListSidebar(show){
+function toggleListSidebar(){
 
 
     const container = document.getElementById("lists-sidebar-container")
-    const shouldShow = typeof show === "boolean" ? show : container.style.display !== "flex"
+    container.classList.toggle("active")
 
-    container.classList.toggle('active');
+}
 
-   /*  if(shouldShow)
-        container.setAttribute("style", "display: flex")
-    else
-        container.setAttribute("style", "display: none")
+function toggleItemCardSelection(itemId){
 
- */
+    const card = document.getElementById(itemId)
+    return card.classList.toggle("item-checked")
+
 }
 
 
@@ -185,8 +184,8 @@ function showListSelection(itemId){
 
     const container = document.getElementById("list-selection")
     container.innerHTML = ""
-    toggleListSelection(true)
-
+    let n = false
+    
     lists.forEach(list => {
 
         if(list.findItemById(itemId) == undefined){
@@ -198,8 +197,13 @@ function showListSelection(itemId){
                 <h2>${list.name}</h2>
             `
             container.appendChild(card)
+            n = true
         }
     })
+
+    //prevent list selection from being shown if the item already belongs to all lists
+    if(n)
+        toggleListSelection(true)
 }
 
 /**
@@ -277,25 +281,35 @@ function renderSingleItemCard(item, scrollIntoView = true, withCheckbox = false)
     const itemContainer = document.getElementById("items-container")
 
     let checkbox = ""
+    let viewItem = ""
 
     if(withCheckbox)
         checkbox = `
     
-        <input type="checkbox" id="item-checkbox" onchange="itemChecked('${item.id}')">
+        <div class="overlay" id="${item.id}" style="width: 90%; background: transparent" onclick="toggleItemCheck('${item.id}')">
+        </div>
 
-    `
+    `   
+    else
+        viewItem = `
+
+            onclick="viewItem('${item.id}')
+        `
+
 
     const card = document.createElement("div")
     card.classList.add("item-card")
+    card.id = item.id
     let itemInfo = createItemHTML(item)
     card.innerHTML = `
         
-        ${checkbox}
-        <div class="item-card-info" onclick="viewItem('${item.id}')">
-            
+        <div class="item-card-info" ${viewItem}">
+        ${checkbox}    
             <h4>${item.name}</h4><br>
+            
             ${itemInfo}
-            </div>
+        
+        </div>
 
         <button onClick=showListSelection('${item.id}')>+</button>
     `
@@ -345,7 +359,7 @@ function createItemHTML(item){
         </span>
         <span>
             |Peso: ${item.weight || "/"}Kg <br>
-            |Tipo: ${item.type || "/"} <br>
+            |WI: <span id="${item.id + "span"}">${item.wantedIndex}</span> <br>
             |Qta: ${item.qty || "/"} <br>
         </span>
 

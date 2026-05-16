@@ -38,7 +38,10 @@
 
     border: 1px solid black;
 
+    position: relative;
+
     display: flex;
+
     flex-direction: row;
     width: 100%;
     align-items: center;
@@ -57,12 +60,20 @@
     height: 50%;
 }
 
+
 .item-card-info {
 
     width: 100%;
     display: flex;
-    justify-content:  space-between;
     align-items: center;
+    justify-content: space-between;
+}
+
+.item-card-info h4 {
+
+    width: 10vw;
+    word-wrap: normal;
+    padding: 5px;
 }
 
 .list-selection-card {
@@ -88,4 +99,9 @@
     border: 1px solid black;
     background-color: #fff;
     padding: 12px;
+}
+
+.item-checked {
+
+    background-color: cyan;
 }
