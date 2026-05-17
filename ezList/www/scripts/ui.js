@@ -303,15 +303,15 @@ function renderSingleItemCard(item, scrollIntoView = true, withCheckbox = false)
     let itemInfo = createItemHTML(item)
     card.innerHTML = `
         
+        <span class="item-name">${item.name}</span>
         <div class="item-card-info" ${viewItem}">
         ${checkbox}    
-            <h4>${item.name}</h4><br>
             
             ${itemInfo}
         
+            <button onClick=showListSelection('${item.id}')>+</button>
         </div>
 
-        <button onClick=showListSelection('${item.id}')>+</button>
     `
 
     itemContainer.appendChild(card)
@@ -331,10 +331,11 @@ function viewItem(itemId){
 
     let card = document.createElement("div")
     let itemInfo = createItemHTML(item)
+    card.classList.add("item-card", "item-display-card")
     card.innerHTML = `
 
-        <div class="item-display-card">
-            <h4>${item.name}</h4><br>
+        <span class="item-name">${item.name}</span>
+        <div class="item-card-info">
             ${itemInfo}
         </div>
     `
