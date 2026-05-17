@@ -228,6 +228,7 @@ function toggleItemCheck(itemId){
     else
         decreaseItemWI(itemId)
 
+    saveLists()
 
     const WIspan = document.getElementById(itemId + "span")
     WIspan.innerHTML = getItemById(itemId).wantedIndex

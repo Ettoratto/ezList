@@ -1,5 +1,5 @@
-let lists = []
-let items = []
+lists = []
+items = []
 
 let currentListSort = "recent"
 let currentItemSort = "recent"
@@ -132,3 +132,5 @@ function decreaseItemWI(itemId){
 
     getItemById(itemId).wantedIndex--
 }
+
+

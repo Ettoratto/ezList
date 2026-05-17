@@ -354,11 +354,11 @@ function createItemHTML(item){
 
         <span> 
             |Prezzo: ${item.price || "/"}€ <br> 
-            |Prezzo/Kg: ${item.priceKG || "/"} <br>
+            |€/Kg: ${item.priceKG || "/"} <br>
             |Marca: ${item.brand || "/"} <br>
         </span>
         <span>
-            |Peso: ${item.weight || "/"}Kg <br>
+            |Peso: ${item.weight || "/"} <br>
             |WI: <span id="${item.id + "span"}">${item.wantedIndex}</span> <br>
             |Qta: ${item.qty || "/"} <br>
         </span>
