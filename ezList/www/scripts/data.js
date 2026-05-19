@@ -1,10 +1,17 @@
-lists = []
-items = []
+"use strict"
+
+let lists = []
+let items = []
 
 let currentListSort = "recent"
 let currentItemSort = "recent"
 let isListSortInverted = false
 let isItemSortInverted = false
+
+function createCompactId(){
+
+    return crypto.randomUUID().replaceAll("-", "")
+}
 
 /**
  * Represents a shopping list and the related item ids.
@@ -17,9 +24,7 @@ class List {
         this.items = items || []
         this.isSelected = false
         
-        const [part1, part2, part3] = crypto.randomUUID().split("-")
-        const newId = part1 + part2 + part3
-        this.id = id || newId
+        this.id = id || createCompactId()
         
     }
 
@@ -72,7 +77,8 @@ class List {
         this.items.forEach(itemId => {
             
             const item = getItemById(itemId)
-            const price = item ? parseFloat(item.price) || 0 : 0
+            const priceValue = item ? (item.getPrice ? item.getPrice() : item.price) : 0
+            const price = parseFloat(priceValue) || 0
             total += price
         })
 
@@ -103,6 +109,116 @@ class List {
 
 }
 
+class Item {
+
+    constructor(name, weight, qty, price, priceKG, type, brand, id, wantedIndex = 0){
+
+        this.name = name
+        this.weight = weight
+        this.qty = qty
+        this.price = price
+        this.priceKG = priceKG
+        this.type = type
+        this.brand = brand
+        this.wantedIndex = wantedIndex
+        
+        this.id = id || createCompactId()
+        
+    }
+
+    getName(){
+
+        return this.name
+    }
+
+    setName(name){
+
+        this.name = name
+    }
+
+    getWeight(){
+
+        return this.weight
+    }
+
+    setWeight(weight){
+
+        this.weight = weight
+    }
+
+    getQty(){
+
+        return this.qty
+    }
+
+    setQty(qty){
+
+        this.qty = qty
+    }
+
+    getPrice(){
+
+        return this.price
+    }
+
+    setPrice(price){
+
+        this.price = price
+    }
+
+    getPriceKG(){
+
+        return this.priceKG
+    }
+
+    setPriceKG(priceKG){
+
+        this.priceKG = priceKG
+    }
+
+    getType(){
+
+        return this.type
+    }
+
+    setType(type){
+
+        this.type = type
+    }
+
+    getBrand(){
+
+        return this.brand
+    }
+
+    setBrand(brand){
+
+        this.brand = brand
+    }
+
+    getId(){
+
+        return this.id
+    }   
+
+    setId(id){
+
+        this.id = id
+    }
+
+    getWantedIndex(){
+
+        return this.wantedIndex
+    }
+
+    setWantedIndex(wantedIndex){
+
+        this.wantedIndex = wantedIndex
+    }
+
+    
+}
+
 /**
  * Gets a list by id using string comparison to normalize id types.
  * @param {string} id
@@ -110,7 +226,7 @@ class List {
  */
 function getListById(id){
 
-   return lists.find(list => String(list.id).localeCompare(String(id)) == 0);
+    return lists.find(list => String(list.id) === String(id))
 }
 
 /**
@@ -120,17 +236,23 @@ function getListById(id){
  */
 function getItemById(itemId){
 
-    return items.find(item => item.id == itemId)
+    return items.find(item => String(item.id) === String(itemId))
 }
 
 function increaseItemWI(itemId){
 
-    getItemById(itemId).wantedIndex++
+    const item = getItemById(itemId)
+
+    if(item)
+        item.setWantedIndex((item.getWantedIndex ? item.getWantedIndex() : item.wantedIndex) + 1)
 }
 
 function decreaseItemWI(itemId){
 
-    getItemById(itemId).wantedIndex--
+    const item = getItemById(itemId)
+
+    if(item)
+        item.setWantedIndex((item.getWantedIndex ? item.getWantedIndex() : item.wantedIndex) - 1)
 }
 
 

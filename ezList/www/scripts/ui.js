@@ -1,3 +1,58 @@
+"use strict"
+
+function clearElement(element){
+
+    element.replaceChildren()
+}
+
+function escapeHTML(value){
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;")
+        .replaceAll("/", "&#x2F;")
+        .replaceAll("`", "&#x60;")
+        .replaceAll("=", "&#x3D;")
+}
+
+function toggleModal(modalId, show, inputSelectorToClear = null) {
+
+    const modal = document.getElementById(modalId)
+    if(!modal)
+        return false
+
+    const shouldShow = typeof show === "boolean" ? show : modal.style.display !== "flex"
+    modal.style.display = shouldShow ? "flex" : "none"
+
+    if(!shouldShow && inputSelectorToClear) {
+        document.querySelectorAll(`${inputSelectorToClear} input`).forEach(input => input.value = "")
+    }
+
+    return shouldShow
+}
+
+function createItemHTML(item){
+
+    const wantedIndex = item.getWantedIndex ? item.getWantedIndex() : item.wantedIndex
+
+    return `
+
+        <span> 
+            |Prezzo: ${escapeHTML(item.price || "/")}€ <br> 
+            |€/Kg: ${escapeHTML(item.priceKG || "/")} <br>
+            |Marca: ${escapeHTML(item.brand || "/")} <br>
+        </span>
+        <span>
+            |Peso: ${escapeHTML(item.weight || "/")} <br>
+            |WI: <span id="${item.id + "span"}">${wantedIndex ?? 0}</span> <br>
+            |Qta: ${escapeHTML(item.qty || "/")} <br>
+        </span>
+
+    `
+}
 
 function toggleListSidebar(){
 
@@ -22,16 +77,11 @@ function toggleItemCardSelection(itemId){
  */
 function toggleNewListPopup(show) {
 
-    const popup = document.getElementById("new-list-popup")
     const input = document.getElementById("new-list-name-input")
-    const shouldShow = typeof show === "boolean" ? show : popup.style.display !== "flex"
+    const shouldShow = toggleModal("new-list-popup", show, ".new-list-popup-container")
 
     if(shouldShow){
-        popup.setAttribute("style", "display: flex;")
         input.select()
-    }else{
-        input.value = ""
-        popup.setAttribute("style", "display: none;")
     }
     
 }
@@ -42,19 +92,11 @@ function toggleNewListPopup(show) {
  */
 function toggleNewItemPopup(show) {
 
-    const popup = document.getElementById("new-item-popup")
     const input = document.getElementById("new-item-name-input")
-    const itemInputs = popup.querySelectorAll(".item-input-form input")
-    const shouldShow = typeof show === "boolean" ? show : popup.style.display !== "flex"
+    const shouldShow = toggleModal("new-item-popup", show, ".new-item-popup-container")
 
     if(shouldShow){
-        popup.setAttribute("style", "display: flex;")
         input.select()
-    }else{
-        itemInputs.forEach(input => {
-            input.value = ""
-        })
-        popup.setAttribute("style", "display: none;")
     }
 }
 
@@ -64,13 +106,7 @@ function toggleNewItemPopup(show) {
  */
 function toggleListSelection(show){
 
-    const listSelection = document.getElementById("list-selection")
-    const shouldShow = typeof show === "boolean" ? show : listSelection.style.display !== "flex"
-
-    if(shouldShow)
-        listSelection.setAttribute("style", "display: flex")
-    else
-        listSelection.setAttribute("style", "display: none")
+    toggleModal("list-selection", show)
 }
 
 /**
@@ -79,13 +115,7 @@ function toggleListSelection(show){
  */
 function toggleItemDisplay(show){
 
-    const itemDisplay = document.getElementById("item-display")
-    const shouldShow = typeof show === "boolean" ? show : itemDisplay.style.display !== "flex"
-
-    if(shouldShow)
-        itemDisplay.setAttribute("style", "display: flex")
-    else
-        itemDisplay.setAttribute("style", "display: none")
+    toggleModal("item-display", show)
 }
 
 /**
@@ -183,7 +213,7 @@ function viewList(id){
 function showListSelection(itemId){
 
     const container = document.getElementById("list-selection")
-    container.innerHTML = ""
+    clearElement(container)
     let n = false
     
     lists.forEach(list => {
@@ -191,11 +221,13 @@ function showListSelection(itemId){
         if(list.findItemById(itemId) == undefined){
             
             const card = document.createElement("div")
-            card.onclick = () => addItemToList(itemId, list.getId())
             card.classList.add("list-selection-card")
+            card.addEventListener("click", () => addItemToList(itemId, list.getId()))
+
             card.innerHTML = `
-                <h2>${list.name}</h2>
+                <h2>${escapeHTML(list.name)}</h2>
             `
+
             container.appendChild(card)
             n = true
         }
@@ -203,7 +235,9 @@ function showListSelection(itemId){
 
     //prevent list selection from being shown if the item already belongs to all lists
     if(n)
-        toggleListSelection(true)
+        toggleModal("list-selection", true)
+    else
+        toggleModal("list-selection", false)
 }
 
 /**
@@ -213,7 +247,7 @@ function showListSelection(itemId){
 function renderListCards(myLists = lists, scrollIntoView = true){
 
     const listContainer  = document.getElementById("lists-container")
-    listContainer.innerHTML = ""
+    clearElement(listContainer)
 
     myLists.forEach(list => {
         renderSingleListCard(list, scrollIntoView)
@@ -228,19 +262,18 @@ function renderSingleListCard(list, scrollIntoView = true){
 
     const listContainer  = document.getElementById("lists-container")
 
-    let card = document.createElement("div")
-    card.setAttribute("onClick", "viewList('" + list.id + "')")
+    const card = document.createElement("div")
     card.setAttribute("id", list.id)
     card.classList.add("list-card")
+    card.addEventListener("click", () => viewList(list.id))
+
     card.innerHTML = `
-        <h2>${list.name}</h2>
+        <h2>${escapeHTML(list.name)}</h2>
         <span>Totale: ${list.getTotalCost()}€</span>
         <span>Articoli: ${list.getItemsCount()}</span>
     `
 
     listContainer.appendChild(card)
-    if(scrollIntoView)
-        card.scrollIntoView()
     if(scrollIntoView)
         card.scrollIntoView()
 }
@@ -253,7 +286,7 @@ function renderSingleListCard(list, scrollIntoView = true){
 function renderItemCards(itemsArray, scrollIntoView = true, selectedListId = null){
 
     const itemContainer = document.getElementById("items-container")
-    itemContainer.innerHTML = ""
+    clearElement(itemContainer)
 
     if(itemsArray){
         let list = getListById(selectedListId)
@@ -280,13 +313,17 @@ function renderSingleItemCard(item, scrollIntoView = true, withCheckbox = false)
 
     const itemContainer = document.getElementById("items-container")
 
+    const card = document.createElement("div")
+    card.classList.add("item-card")
+    card.id = item.id
+
     let checkbox = ""
     let viewItem = ""
 
     if(withCheckbox)
         checkbox = `
     
-        <div class="overlay" id="${item.id}" style="width: 90%; background: transparent" onclick="toggleItemCheck('${item.id}')">
+        <div class="overlay" style="width: 90%; background: transparent" onclick="toggleItemCheck('${item.id}')">
         </div>
 
     `   
@@ -296,13 +333,10 @@ function renderSingleItemCard(item, scrollIntoView = true, withCheckbox = false)
         `
 
 
-    const card = document.createElement("div")
-    card.classList.add("item-card")
-    card.id = item.id
     let itemInfo = createItemHTML(item)
     card.innerHTML = `
         <div style="width: 90%" ${viewItem}>
-            <span class="item-name">${item.name}</span>
+            <span class="item-name">${escapeHTML(item.name)}</span>
             <div class="item-card-info">
             ${checkbox}    
                 
@@ -331,14 +365,15 @@ function viewItem(itemId){
 
     const item = getItemById(itemId)
     const container = document.getElementById("item-display")
-    container.innerHTML = ""
+    clearElement(container)
 
-    let card = document.createElement("div")
-    let itemInfo = createItemHTML(item)
+    const card = document.createElement("div")
     card.classList.add("item-card", "item-display-card")
+
+    let itemInfo = createItemHTML(item)
     card.innerHTML = `
         <div>
-            <span class="item-name">${item.name}</span>
+            <span class="item-name">${escapeHTML(item.name)}</span>
             <div class="item-card-info">  
                 ${itemInfo}
             </div>
@@ -346,30 +381,7 @@ function viewItem(itemId){
     `
 
     container.appendChild(card)
-    toggleItemDisplay(true)
-}
-
-/**
- * Builds reusable HTML fragment for item details.
- * @param {Object} item
- * @returns {string}
- */
-function createItemHTML(item){
-
-    return `
-
-        <span> 
-            |Prezzo: ${item.price || "/"}€ <br> 
-            |€/Kg: ${item.priceKG || "/"} <br>
-            |Marca: ${item.brand || "/"} <br>
-        </span>
-        <span>
-            |Peso: ${item.weight || "/"} <br>
-            |WI: <span id="${item.id + "span"}">${item.wantedIndex}</span> <br>
-            |Qta: ${item.qty || "/"} <br>
-        </span>
-
-    `
+    toggleModal("item-display", true)
 }
 
 /**

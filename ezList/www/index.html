@@ -135,19 +135,19 @@
             </div>
             <div class="new-list-popup" id="new-list-popup">
 
-                <div class="overlay" onclick="toggleNewListPopup(false)"></div>
+                <div class="overlay" onclick="toggleModal('new-list-popup', false, '.new-list-popup-container')"></div>
 
                 <div class="new-list-popup-container">
 
                     <input type="text" placeholder="Nome della lista" id="new-list-name-input">
                     <button onclick="createNewList()">Crea</button>
-                    <button onclick="toggleNewListPopup(false)">Annulla</button>
+                    <button onclick="toggleModal('new-list-popup', false, '.new-list-popup-container')">Annulla</button>
                 </div>
             </div>
 
             <div class="new-item-popup" id="new-item-popup">
 
-                <div class="overlay" onclick="toggleNewItemPopup(false)"></div>
+                <div class="overlay" onclick="toggleModal('new-item-popup', false, '.new-item-popup-container')"></div>
                 
                     <div class="new-item-popup-container">
                         <form class="item-input-form">
@@ -161,16 +161,16 @@
                         </form>
                         
                         <button onclick="createNewItem()">Crea</button>
-                        <button onclick="toggleNewItemPopup(false)">Annulla</button>
+                        <button onclick="toggleModal('new-item-popup', false, '.new-item-popup-container')">Annulla</button>
                     </div>
             </div>
 
         </div>
 
-        <div class="list-selection" id="list-selection" onclick="toggleListSelection(false)">  
+        <div class="list-selection" id="list-selection" onclick="toggleModal('list-selection', false)">  
         </div>
 
-        <div class="item-display" id="item-display" onclick="toggleItemDisplay(false)">
+        <div class="item-display" id="item-display" onclick="toggleModal('item-display', false)">
         </div>
         
         <script src="scripts/app.js"></script>

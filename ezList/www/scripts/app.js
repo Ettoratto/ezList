@@ -1,3 +1,5 @@
+"use strict"
+
 /**
  * Creates a new list from popup input and renders it.
  */
@@ -10,7 +12,7 @@ function createNewList() {
     const newList = new List(listName) 
     lists.push(newList)
 
-    toggleNewListPopup(false)
+    toggleModal("new-list-popup", false, ".new-list-popup-container")
     saveLists()
     renderListsFromState()
 }
@@ -31,15 +33,12 @@ function createNewItem() {
     const itemPriceKG = document.getElementById("new-item-priceKG-input").value
     const itemType = document.getElementById("new-item-type-input").value
     const itemBrand = document.getElementById("new-item-brand-input").value
-    const [part1, part2, part3] = crypto.randomUUID().split("-")
-    // Keep a compact id by joining the first UUID segments.
-    const itemId = part1 + part2 + part3
 
-    const item = {id: itemId, name: itemName, weight: itemWeight, qty: itemQty, price: itemPrice, priceKG: itemPriceKG, type: itemType, brand: itemBrand, wantedIndex: 0}
+    const item = new Item(itemName, itemWeight, itemQty, itemPrice, itemPriceKG, itemType, itemBrand)
 
     items.push(item)
 
-    toggleNewItemPopup(false)
+    toggleModal("new-item-popup", false, ".new-item-popup-container")
     saveLists()
     renderItemsFromState()
 }
@@ -65,7 +64,7 @@ function createNewItem() {
 function getListSearchResults(){
     const searchInput = document.getElementById("search-list-bar-input").value.toLowerCase().trim()
 
-    return lists.filter((list) => String(list.name).toLowerCase().trim().search(searchInput) != -1)
+    return lists.filter((list) => String(list.name).toLowerCase().trim().includes(searchInput))
 }
 
 /**
@@ -74,19 +73,7 @@ function getListSearchResults(){
  */
 function getSelectedListId(){
 
-    let listId = null
-
-    for(let i = 0; i < lists.length; i++){
-        let listElement = document.getElementById(lists[i].id)
-
-        if(!listElement)
-            continue
-            
-        if(listElement.classList.contains("selected-list-card"))
-            listId = lists[i].id
-    }
-
-    return listId
+    return lists.find(list => list.isSelected)?.id || null
 }
 
 /**
@@ -105,12 +92,12 @@ function getItemSearchResults(){
         .map((itemId) => getItemById(String(itemId)))
         .filter((itemObj) => {
             if (!itemObj || !itemObj.name) return false
-            return itemObj.name.toLowerCase().trim().search(searchInput) !== -1
+            return itemObj.name.toLowerCase().trim().includes(searchInput)
         })
 
     }
 
-    return items.filter((item) => String(item.name).toLowerCase().trim().search(searchInput) != -1)
+    return items.filter((item) => String(item.name).toLowerCase().trim().includes(searchInput))
 }
 
 /**
@@ -122,11 +109,11 @@ function getItemSearchResults(){
 function sortListsArray(listsArray, sortBy){
     switch(sortBy){
         case "name":
-            return listsArray.toSorted((a, b) => a.name.localeCompare(b.name))
+            return [...listsArray].sort((a, b) => a.name.localeCompare(b.name))
         case "itemsCount":
-            return listsArray.toSorted((a, b) => b.items.length - a.items.length)
+            return [...listsArray].sort((a, b) => b.items.length - a.items.length)
         case "cost":
-            return listsArray.toSorted((a, b) => b.getTotalCost() - a.getTotalCost())
+            return [...listsArray].sort((a, b) => b.getTotalCost() - a.getTotalCost())
         case "recent":
         default:
             return [...listsArray]
@@ -143,16 +130,16 @@ function sortItemsArray(itemsArray, sortBy){
     switch(sortBy){
         
         case "name":
-            return itemsArray.toSorted((a, b) => a.name.localeCompare(b.name))
+            return [...itemsArray].sort((a, b) => a.name.localeCompare(b.name))
         
         case "price":
-            return itemsArray.toSorted((a, b) => b.price - a.price)
+            return [...itemsArray].sort((a, b) => (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0))
         
         case "brand":
-            return itemsArray.toSorted((a, b) => a.brand.localeCompare(b.brand))
+            return [...itemsArray].sort((a, b) => a.brand.localeCompare(b.brand))
 
         case "wanted":
-            return itemsArray.toSorted((a, b) => b.wantedIndex - a.wantedIndex)
+            return [...itemsArray].sort((a, b) => (b.getWantedIndex ? b.getWantedIndex() : b.wantedIndex) - (a.getWantedIndex ? a.getWantedIndex() : a.wantedIndex))
 
         case "recent":
             
@@ -231,6 +218,8 @@ function toggleItemCheck(itemId){
     saveLists()
 
     const WIspan = document.getElementById(itemId + "span")
-    WIspan.innerHTML = getItemById(itemId).wantedIndex
+    const item = getItemById(itemId)
+    if(WIspan && item)
+        WIspan.textContent = item.getWantedIndex ? item.getWantedIndex() : item.wantedIndex
 
 }
