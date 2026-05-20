@@ -223,3 +223,7 @@ function toggleItemCheck(itemId){
         WIspan.textContent = item.getWantedIndex ? item.getWantedIndex() : item.wantedIndex
 
 }
+
+function editItem(itemId){
+
+}

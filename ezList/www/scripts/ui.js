@@ -316,6 +316,9 @@ function renderSingleItemCard(item, scrollIntoView = true, withCheckbox = false)
     const card = document.createElement("div")
     card.classList.add("item-card")
     card.id = item.id
+    
+    const editSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M227.32,73.37,182.63,28.69a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H216a8,8,0,0,0,0-16H115.32l112-112A16,16,0,0,0,227.32,73.37ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.69,147.32,64l24-24L216,84.69Z"></path></svg>'
+    const addSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M32,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H40A8,8,0,0,1,32,64Zm8,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16Zm104,48H40a8,8,0,0,0,0,16H144a8,8,0,0,0,0-16Zm88,0H216V168a8,8,0,0,0-16,0v16H184a8,8,0,0,0,0,16h16v16a8,8,0,0,0,16,0V200h16a8,8,0,0,0,0-16Z"></path></svg>'
 
     let checkbox = ""
     let viewItem = ""
@@ -345,8 +348,8 @@ function renderSingleItemCard(item, scrollIntoView = true, withCheckbox = false)
             </div>
         </div>
         <div class="item-menu">
-            <button onClick=showListSelection('${item.id}')>m</button>
-            <button onClick=showListSelection('${item.id}')>+</button>
+            <button onClick=editItem('${item.id}')>${editSvg}</button>
+            <button onClick=showListSelection('${item.id}')>${addSvg}</button>
         </div>
         
         
