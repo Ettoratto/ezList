@@ -82,7 +82,7 @@ function getSelectedListId(){
  */
 function getItemSearchResults(){
 
-    const searchInput = document.getElementById("search-item-bar-input").value.toLowerCase().trim()
+    const searchInput = document.getElementById("search-items-bar-input").value.toLowerCase().trim()
     const selectedListId = getSelectedListId()
     const selectedList = getListById(selectedListId)
 
@@ -199,11 +199,13 @@ function sortItems(sortBy){
 
 function searchItems(){
 
+    // toggleSearchIcon("search-items-bar-input", "search-items-icon")
     renderItemsFromState()
 }
 
 function searchLists(){
 
+    // toggleSearchIcon("search-list-bar-input", "search-lists-icon")
     renderListsFromState()
 }
 

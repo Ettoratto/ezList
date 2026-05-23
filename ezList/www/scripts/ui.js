@@ -34,6 +34,17 @@ function toggleModal(modalId, show, inputSelectorToClear = null) {
     return shouldShow
 }
 
+function toggleSearchIcon(inputId, iconId){
+
+    const input = document.getElementById(inputId)    
+    const searchIcon = document.getElementById(iconId)
+
+    if(input.value != "")
+        searchIcon.setAttribute("style", "display: none")
+    else
+        searchIcon.setAttribute("style", "display: flex")
+}
+
 function createItemHTML(item){
 
     const wantedIndex = item.getWantedIndex ? item.getWantedIndex() : item.wantedIndex
