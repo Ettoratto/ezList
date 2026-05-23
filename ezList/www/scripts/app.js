@@ -199,13 +199,13 @@ function sortItems(sortBy){
 
 function searchItems(){
 
-    // toggleSearchIcon("search-items-bar-input", "search-items-icon")
+    toggleSearchIcon("search-items-bar-input", "search-items-icon")
     renderItemsFromState()
 }
 
 function searchLists(){
 
-    // toggleSearchIcon("search-list-bar-input", "search-lists-icon")
+    toggleSearchIcon("search-list-bar-input", "search-lists-icon")
     renderListsFromState()
 }
 
