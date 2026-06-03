@@ -1,5 +1,74 @@
 "use strict"
 
+const THEME_STORAGE_KEY = "mode"
+const prefersLight = window.matchMedia("(prefers-color-scheme: light)")
+const prefersDark = window.matchMedia("(prefers-color-scheme: dark)")
+
+function setTheme(theme, persist = false) {
+
+    const normalizedTheme = theme === "dark" ? "dark" : "light"
+
+    document.body.classList.remove("light", "dark")
+    document.body.classList.add(normalizedTheme)
+
+    if(persist)
+        localStorage.setItem(THEME_STORAGE_KEY, normalizedTheme)
+}
+
+function darkmode(persist = false) {
+
+    setTheme("dark", persist)
+}
+
+function lightmode(persist = false) {
+
+    setTheme("light", persist)
+}
+
+function initializeTheme() {
+
+    const storedTheme = localStorage.getItem(THEME_STORAGE_KEY)
+
+    if(storedTheme === "dark") {
+        darkmode(true)
+    } else if(storedTheme === "light") {
+        lightmode(true)
+    } else if(prefersLight.matches) {
+        lightmode(false)
+    } else {
+        darkmode(false)
+    }
+
+    const handleOSColorChange = () => {
+
+        if(localStorage.getItem(THEME_STORAGE_KEY) !== null)
+            return
+
+        if(prefersLight.matches) {
+            lightmode(false)
+        } else if(prefersDark.matches) {
+            darkmode(false)
+        }
+    }
+
+    if(typeof prefersLight.addEventListener === "function") {
+        prefersLight.addEventListener("change", handleOSColorChange)
+        prefersDark.addEventListener("change", handleOSColorChange)
+    } else {
+        prefersLight.addListener(handleOSColorChange)
+        prefersDark.addListener(handleOSColorChange)
+    }
+}
+
+function toggleTheme(){
+
+    if(document.body.classList.contains("dark")) {
+        lightmode(true)
+    } else {
+        darkmode(true)
+    }
+}
+
 function clearElement(element){
 
     element.replaceChildren()
@@ -414,4 +483,6 @@ function invertSort(myLists){
 
     toggleSortArrow(myLists)
 }
+
+initializeTheme()
 

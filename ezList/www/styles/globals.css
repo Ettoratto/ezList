@@ -1,3 +1,51 @@
+:root {
+  color-scheme: light;
+  --bg-color: #f4f6fb;
+  --panel-color: #ffffff;
+  --surface-color: #ffffff;
+  --surface-muted: rgba(15, 23, 42, 0.05);
+  --border-color: rgba(15, 23, 42, 0.18);
+  --text-color: #111827;
+  --text-muted: #4b5563;
+  --placeholder-color: #6b7280;
+  --input-bg: rgba(255, 255, 255, 0.85);
+  --hover-bg: rgba(15, 23, 42, 0.06);
+  --overlay-color: rgba(15, 23, 42, 0.55);
+  --sidebar-color: #eef2f7;
+  --sort-menu-bg: #ffffff;
+  --list-selection-card-bg: rgba(15, 23, 42, 0.8);
+  --list-selection-card-text: #ffffff;
+  --selected-list-bg: rgba(244, 114, 182, 0.32);
+  --item-checked-bg: rgba(34, 197, 94, 0.2);
+  --icon-color: #111827;
+}
+
+body.light {
+  color-scheme: light;
+}
+
+body.dark {
+  color-scheme: dark;
+  --bg-color: #0f172a;
+  --panel-color: #111827;
+  --surface-color: #1e293b;
+  --surface-muted: rgba(255, 255, 255, 0.06);
+  --border-color: rgba(226, 232, 240, 0.18);
+  --text-color: #e2e8f0;
+  --text-muted: #94a3b8;
+  --placeholder-color: #cbd5e1;
+  --input-bg: rgba(15, 23, 42, 0.82);
+  --hover-bg: rgba(255, 255, 255, 0.08);
+  --overlay-color: rgba(2, 6, 23, 0.7);
+  --sidebar-color: #0f172a;
+  --sort-menu-bg: #111827;
+  --list-selection-card-bg: rgba(255, 255, 255, 0.12);
+  --list-selection-card-text: #e2e8f0;
+  --selected-list-bg: rgba(244, 114, 182, 0.2);
+  --item-checked-bg: rgba(34, 197, 94, 0.22);
+  --icon-color: #e2e8f0;
+}
+
 body {
   margin: 0;
   min-width: 100vw;
@@ -5,18 +53,60 @@ body {
   overflow-x: hidden;
   overflow-y: hidden;
   box-sizing: border-box;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: "HostGrotesk";
 }
 
-body, html {
-
+body,
+html {
   overscroll-behavior: none;
 }
 
-.container {
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: var(--text-color);
+}
 
+button {
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  background-color: var(--input-bg);
+  border-color: var(--border-color);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--placeholder-color);
+}
+
+svg {
+  color: var(--icon-color);
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+body.light #sun-svg,
+body.dark #moon-svg {
+  display: none;
+}
+
+.container {
   display: flex;
   flex-direction: column;
   padding: 1vw;
   height: 100vh;
   box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'HostGrotesk';
+    src: url('../res/fonts/HostGrotesk-VariableFont_wght.ttf') format('truetype');
 }
